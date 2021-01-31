@@ -1,0 +1,27 @@
+#### THIS IS A TEMPLATE FOR INPUTS TO BE READ FROM FILE TO CREATE A NEW LEGISWEB INSTANCE ####
+
+#### All rows beginning with a hash symbol will be ignored. 
+#### Please enter the relevant information immediately below the instructions for that input!
+
+## chromedriver location. This is where the Selenium driver that automatically clicks through a website lives. 
+## Example: /home/yourname/chromedriver
+
+## download folder path. This folder, which may or may not exist yet, is where all the downloaded PDFs will go for this country. 
+## you MUST include a slash ( "/" ) at the end. 
+## Example: /home/yourname/downloads/kenya_downloads/  
+
+## website address
+## the initial website for the legislative body of the country. 
+## To be safe, please include "http://", since not all websites are registered with "www." 
+## Example: http://kenyalaw.org/kl/
+
+## country name
+## Example: "Kenya" 
+
+## language of website
+## Give the language the legislative website and documents are written in. 
+## Example: "English"  
+
+## keywords 
+## Please write a comma-separated list of the keywords you want to search the website for. 
+## Example: legal aid, judicial assistance, legal assistance, legal service

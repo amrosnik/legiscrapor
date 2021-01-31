@@ -1,0 +1,15 @@
+Pick a File Syncing Service (and Use It)
+
+The core of my system is a file syncing service. I have tried them all and settled on NextCloud, which I host on my own server. There's a hosted version available as well. If you want a more familiar name, Dropbox, Google Drive, and Sync.com all offer roughly the same features.
+
+Once you install the app for whichever service you decide to use, it runs in the background and syncs your files to a remote server. How this works varies somewhat. For example, Dropbox by default creates its own folder and syncs anything you put in it. One of the things I like about NextCloud is that you can tell it which folders you want synced. You don't have to change anything about where you store your files.
+
+When you change a file on your device, the service syncs those changes to the server. Any other device also connected will then pull in those changes. This way, you can easily go from working on your phone to working on a tablet to working on a laptop, without noticing that you've switched devices. Even if you don't test hardware for a living, this makes life simpler—you always know all your files are available on all your devices.
+
+The best way to think of this syncing system is that the server copy of a file is the canonical file. The "real" file lives on the server, which is like the library of all your files; you're just "checking out" those files on whichever device you're using. If you get rid of a device, your files are unaffected. In my case, once I'm done testing a laptop, I reset Windows (or macOS) and my files are gone from the device but still out there in my "library" on the server.
+
+I store everything in NextCloud, but it takes a long time to sync gigabytes and gigabytes of media files every time I test a new laptop. So I only sync a few key files to new devices, primarily my documents folder and a folder of notes. It's about five gigabytes of data and generally takes less than 20 minutes to download.
+
+The one caveat here is that you must save any files you create on your local device to the folder that's being synced. This will bite you if you only sync your documents folder but your web browser downloads a file into the Downloads folder. You think the file has been synced, but it hasn't because it's not in the Documents folder. The way around this is either tell your browser to download to Documents, manually move the files you want synced into Documents, or sync your Downloads folder.
+
+One thing to note: Using a syncing service is not the same as making a backup. These are not backups of your files. Any changes you make to a file will cascade across all your devices, which is the opposite of what a good backup does. A good backup never changes. Just because you have things synced does not mean you have them backed up.

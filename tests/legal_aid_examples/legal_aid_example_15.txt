@@ -1,0 +1,11 @@
+he Poor Persons Defence Act, 1998
+1. Interpretation. 
+In this Act, unless the context otherwise requires—
+(a) certifying officer means a magistrate presiding over committal proceedings under section 168 of the Magistrates Courts Act, a judge of the High Court, the registrar of the High Court and a deputy or district registrar of the High Court;
+(d) prisoner means a poor person committed for trial;
+(e) trial judge means a judge of the High Court.
+
+2. Provision of legal aid. 
+Where it appears for any reason that it is desirable, in the interests of justice, that a prisoner should have legal aid in the preparation and conduct of his or her defence at his or her trial and that the means of the prisoner are insufficient to enable him or her to obtain such aid—
+(a) a certifying officer, upon the committal of the prisoner for trial; or
+(b) a certifying officer at any time after reading the summary of the case submitted at the committal proceedings, may certify that the prisoner ought to have the legal aid, and if an indictment is filed against the prisoner and it is possible to procure an advocate, the prisoner shall be entitled to have an advocate assigned to him or her.
