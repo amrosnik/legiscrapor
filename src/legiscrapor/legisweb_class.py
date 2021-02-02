@@ -9,10 +9,10 @@ import pandas as pd
 import numpy as np 
 import os
 import shutil 
-import selsearch
+from legiscrapor import selsearch
 import re
-import nlpIE
-import pdf_saver as ps 
+from legiscrapor import nlpIE
+from legiscrapor import pdf_saver as ps 
 
 #### ######## ######## ######## ########
 #### This is the generic class used to 
