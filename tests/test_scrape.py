@@ -1,7 +1,8 @@
 from selenium import webdriver
 import re 
-import selsearch
+from legiscrapor import selsearch
 import pandas as pd 
+from webdriver_manager.chrome import ChromeDriverManager
 ## test-driving Selenium on my own website.
 
 # dataframe display settings
@@ -9,7 +10,7 @@ pd.set_option('display.max_row', 1050)
 pd.set_option('display.max_column', 16)
 
 ## driver setup + select website of interest
-driver = webdriver.Chrome('/home/andreana/chromedriver')
+driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.maximize_window()
 driver.get('https://andreanarosnik.com')
 
