@@ -9,11 +9,11 @@ import pandas as pd
 import numpy as np 
 import os
 import shutil 
-import selsearch
 import re
-import nlpIE
-import pdf_saver as ps 
-from legisweb_class import legisWeb
+from legiscrapor import nlpIE
+from legiscrapor import pdf_saver as ps 
+from legiscrapor import selsearch
+from legiscrapor.legisweb_class import legisWeb
 
 class legisKenya(legisWeb):
 

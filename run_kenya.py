@@ -2,7 +2,7 @@ import argparse
 from selenium import webdriver
 import pandas as pd
 import os
-from legiskenya import legisKenya
+from legiscrapor.legiskenya import legisKenya
 import numpy as np 
 
 ####### LET'S RUN A KENYA WEB CRAWL ####### 

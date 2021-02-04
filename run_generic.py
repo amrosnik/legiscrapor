@@ -2,7 +2,7 @@ import argparse
 from selenium import webdriver
 import pandas as pd
 import os
-from legisweb_class import legisWeb
+from legiscrapor.legisweb_class import legisWeb
 import numpy as np 
 
 ####### LET'S RUN A GENERIC WEB CRAWL ####### 

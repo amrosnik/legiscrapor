@@ -6,6 +6,22 @@ for legislation related to human rights issues.
 This is being done in conjunction with a non-profit that publishes 
 open comparative datasets on legislation around the world. 
 
+
+## Installation
+`legiscrapor` can be installed with
+
+```sh
+pip install .
+```
+(PyPi installation available soon)
+
+## Development
+Install the test dependencies with:
+
+```sh
+pip install .[testing]
+```
+
 This codebase is a collection of Python modules and scripts. 
 Selenium is heavily employed to automate clicking through websites. 
 We assume one can find relevant legislation for a topic by downloading PDFs 
@@ -43,10 +59,17 @@ from a plain text file.
 
 The general usage is:
 > python run_X.py /path/to/chromedriver -path /path/to/downloads/
+**It's important to have a slash at the end of the downloads path!** 
 
 The downloads folder need not exist prior to running the script. 
-Please install both Selenium and ChromeDriver before using this. 
-**It's important to have a slash at the end of the downloads path!** 
+Please install both Selenium and ChromeDriver before using this.
+For linux:
+
+```bash
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+```
+
 
 There is an extra argument for South Africa for now, because its website 
 has legislation in different sections, and that additional arg specifies which 
