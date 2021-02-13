@@ -255,7 +255,6 @@ class legisWeb():
                line = line.split('\n')[0]
                match_exceptions.append(line)
       self.delete_unneeded_files('no-NLP-match_'+specs,match_exceptions,files_path=path)
-      #self.delete_unneeded_files('no-NLP-match_'+specs,match_exceptions,files_path=self.downloadPath)
 
 
 

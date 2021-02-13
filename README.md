@@ -6,7 +6,8 @@ for legislation related to human rights issues.
 This is being done in conjunction with a non-profit that publishes 
 open comparative datasets on legislation around the world. 
 
-This codebase is a collection of Python modules and scripts. 
+This codebase is a collection of Python modules and scripts; 
+eventually this will become a Python package! 
 Selenium is heavily employed to automate clicking through websites. 
 We assume one can find relevant legislation for a topic by downloading PDFs 
 found by searching the website's database for specific keywords, 
@@ -14,6 +15,23 @@ and then using natural language processing (NLP) information exraction (IE)
 to tokenize the text and search for *actual* instances of those keywords. 
 Believe it or not, some website search engines lead to results that don't 
 actually contain those keywords!
+
+## Prerequisites to install
+
+General software (please search for your operating system for instructions):
+* Chromedriver 
+
+Python packages (these all can be installed via `pip`, and probably other alternatives): 
+* Selenium
+* argparse
+* numpy
+* pandas
+* spacy
+* pytesseract
+* PIL 
+* wand.image 
+
+## Modules 
 
 The modules are as follows: 
 * **nlpIE.py** : module for NLP IE 
@@ -35,6 +53,8 @@ website mechanics were explored and utilized, there are child classes:
 **legisSouthAfrica** and **legisKenya**, for example. The child classes 
 can be found in **legisX.py** files, where "X" is the country name in lowercase 
 letters with no non-letter characters.
+
+## Execution instructions
 
 The code for actually running an end-to-end web crawl is found in **run_X.py** files. 
 These take input arguments from a plain text file. See `inputs/` for example input files. 
