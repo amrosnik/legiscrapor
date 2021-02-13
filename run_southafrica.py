@@ -21,6 +21,7 @@ from legiscrapor.legissouthafrica import legisSouthAfrica
 # import re
 # import time
 import os
+from pathlib import Path
 
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.common.keys import Keys
@@ -50,7 +51,9 @@ args = parser.parse_args()
 if args.path is not None:
     download_path = str(args.path)
 else:
-    download_path = 'south_africa_output'
+    current_dir = Path(os.path.abspath(os.curdir))
+    download_path = current_dir / 'south_africa_output'
+    download_path = str(download_path)  # legiscrapor wants strings for paths
     if not os.path.exists(download_path):
         os.mkdir(download_path)
 
@@ -122,7 +125,7 @@ elif args.webpage == 4:
         new_za.print_matches(matches_bills, specs)
         new_za.delete_no_matches(specs, path=new_za_bills)
     else:
-        new_za.delete_unneeded_files('duplicates-nomatch-'+specs, [],
+        new_za.delete_unneeded_files('duplicates-nomatch-' + specs, [],
                                      files_path=new_za_bills)
 
 
