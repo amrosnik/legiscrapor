@@ -20,6 +20,7 @@ from legiscrapor.legissouthafrica import legisSouthAfrica
 # import datetime
 # import re
 # import time
+import os
 
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.common.keys import Keys
@@ -44,10 +45,17 @@ parser.add_argument('webpage', metavar='webpage', type=int,
                     help='Webpage to process.' + webpage_help)
 parser.add_argument('--driver', '-d', default=ChromeDriverManager().install(),
                     help='Path for Chromedriver')
-parser.add_argument('--path', '-p', help='Path for PDF downloads')
+parser.add_argument('--path', '-p', default=None, help='Path for PDF downloads')
 
 args = parser.parse_args()
-download_path = str(args.path)
+if args.path is None:
+    download_path = str(args.path)
+
+else:
+    download_path = 'south_africa_output'
+    if not os.path.exists(download_path):
+        os.mkdir(download_path)
+
 
 # setting up options for Chromedriver
 # mostly to ensure any PDF links automatically
