@@ -29,7 +29,7 @@ from legiscrapor.legissouthafrica import legisSouthAfrica
 
 
 
-## ARGPARSE: args for this script.
+# ARGPARSE: args for this script.
 docstring = 'Extract legislation PDFs from South African Parliament website.'
 webpage_help = """
 Select from:
@@ -82,8 +82,6 @@ if args.webpage == 1:
     else:
         new_za.delete_unneeded_files('duplicates-nomatch-' + specs, [],
                                      files_path=new_za_const)
-    new_za.delete_unneeded_files('duplicates-' + specs, [])
-    new_za.teardown()
 
 elif args.webpage == 2:
     matches_mandates = new_za.run_mandates(keywords)
@@ -96,8 +94,6 @@ elif args.webpage == 2:
     else:
         new_za.delete_unneeded_files('duplicates-nomatch-'+specs, [],
                                      files_path=new_za_mandates)
-    new_za.delete_unneeded_files('duplicates-'+specs, [])
-    new_za.teardown()
 
 elif args.webpage == 3:
     matches_acts = new_za.run_acts(keywords)
@@ -110,8 +106,6 @@ elif args.webpage == 3:
     else:
         new_za.delete_unneeded_files('duplicates-nomatch-' + specs, [],
                                      files_path=new_za_acts)
-    new_za.delete_unneeded_files('duplicates-' + specs, [])
-    new_za.teardown()
 
 elif args.webpage == 4:
     matches_bills = new_za.run_bills(keywords)
@@ -124,10 +118,11 @@ elif args.webpage == 4:
     else:
         new_za.delete_unneeded_files('duplicates-nomatch-'+specs, [],
                                      files_path=new_za_bills)
-    new_za.delete_unneeded_files('duplicates-' + specs, [])
-    new_za.teardown()
+
 
 else:
     error_msg = 'ERROR: webpage integer indicator not found.'
-    print(error_msg + webpage_help)
-    exit()
+    raise ValueError(error_msg + webpage_help)
+
+new_za.delete_unneeded_files('duplicates-' + specs, [])
+new_za.teardown()
