@@ -8,15 +8,15 @@
 
 ## download folder path. This folder, which may or may not exist yet, is where all the downloaded PDFs will go for this country. 
 ## you MUST include a slash ( "/" ) at the end. 
-/home/yourname/Downloads/kenya_downloads/  
+/home/yourname/Downloads/za_downloads/  
 
 ## website address
 ## the initial website for the legislative body of the country. 
 ## To be safe, please include "http://", since not all websites are registered with "www." 
-http://kenyalaw.org/kl/
+https://www.parliament.gov.za/
 
 ## country name
-Kenya 
+South Africa
 
 ## language of website
 ## Give the language the legislative website and documents are written in. 
@@ -28,4 +28,4 @@ legal aid, judicial assistance, legal assistance, legal service
 
 ## legislation number: use for South Africa or similar websites
 ## for South Africa: 1=Constitution,2=Mandates,3=Acts,4=Other Bills
-1
+2

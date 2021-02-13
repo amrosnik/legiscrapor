@@ -10,41 +10,23 @@ import numpy as np
 ####### SETUP ####### 
 ## ARGPARSE: args for this script. 
 parser = argparse.ArgumentParser(description='Extract PDFs of legislation from South African Parliament website.')
-#parser.add_argument('webpage', metavar='webpage', type=int, 
-#                    help='webpage to process. 1=Constitution,2=Mandates,3=Acts,4=Other Bills')
-parser.add_argument('driver',help='Path for Chromedriver')
-parser.add_argument('-path',help='Path for PDF downloads')
+parser.add_argument('input',help='Path to input file')
 
 args = parser.parse_args()
-download_path = str(args.path)
-
-## setting up options for Chromedriver, mostly to ensure any PDF links automatically download the PDFs to download_path
-options = webdriver.ChromeOptions()
-options.add_experimental_option('prefs', {
-"download.default_directory": download_path, #Change default directory for downloads
-"download.prompt_for_download": False, #To auto download the file
-"download.directory_upgrade": True,
-"plugins.always_open_pdf_externally": True #It will not show PDF directly in chrome
-})
 
 ####### THE GOOD STUFF ####### 
 
-new_kenya = legisKenya(args.driver,download_path,options)
+new_kenya = legisKenya()
+new_kenya.read_inputs(args.input)
 new_kenya.checkers()
 
 pd.options.display.max_colwidth = 1000
-keywords =[ 'judicial assistance']
-#keywords = ['legal aid',
-#           'legal assistance']
-#keywords = ['legal aid',
-#           'legal assistance',
-#           'legal service',
-#           'judicial assistance']
+#keywords =[ 'judicial assistance']
 
-website = "http://kenyalaw.org/kl/"
 all_hrefs = []
-for k in keywords:
-   hrefs = new_kenya.search_laws(website,k)
+for k in new_kenya.keywords:
+   print(k) 
+   hrefs = new_kenya.search_laws(k)
    all_hrefs.append(hrefs)
 
 all_hrefs = [item.split('&term=')[0] for sublist in all_hrefs for item in sublist]

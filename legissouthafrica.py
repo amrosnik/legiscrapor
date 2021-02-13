@@ -20,8 +20,8 @@ from legisweb_class import legisWeb
 
 class legisSouthAfrica(legisWeb):
   
-  def __init__(self, driverLocation,downloadPath,options):
-      super().__init__(driverLocation,downloadPath,options)
+  def __init__(self):
+      super().__init__()
       self.country = "South Africa" 
   
   def search_legislation(self,sublink_text):
@@ -134,7 +134,7 @@ class legisSouthAfrica(legisWeb):
 
   def run_constitution(self,keywords):
     ## the overall process for searching The Constitution main page for keywords.
-    download_path = self.downloadPath+"/constit/"
+    download_path = self.downloadPath+"constit/"
     constit = self.search_legislation("The Constitution") # get to the Constitution page
 
     counts = self.search_for_words(constit,keywords) # search the Constitution landing page for keywords
@@ -153,7 +153,7 @@ class legisSouthAfrica(legisWeb):
 
   def run_mandates(self,keywords): 
     ## the overall process for searching The Mandates main page for keywords.
-    download_path = self.downloadPath+"/mandates/"
+    download_path = self.downloadPath+"mandates/"
     all_match_files = []
     for word in keywords:
        links = self.search_mandates(word,download_path) # for each keyword, run a dynamic table search + save all relevant PDFs
@@ -171,7 +171,7 @@ class legisSouthAfrica(legisWeb):
 
   def run_acts(self,keywords): 
     ## the overall process for searching The Acts main page for keywords.
-    download_path = self.downloadPath+"/acts/"
+    download_path = self.downloadPath+"acts/"
     all_links = []
     match_files = []
     for word in keywords:
