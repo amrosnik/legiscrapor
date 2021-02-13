@@ -51,3 +51,5 @@ MANIFEST
 # Per-project virtualenvs
 .venv*/
 
+# Project default save directories
+south_africa_output/
