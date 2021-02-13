@@ -7,21 +7,25 @@ and added lots of custom functionality.
 """
 
 import argparse
-import datetime
-import re
-import time
 
 import pandas as pd
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
 
-from legiscrapor import nlpIE
-from legiscrapor import pdf_saver as ps
-from legiscrapor import selsearch
+# from legiscrapor import nlpIE
+# from legiscrapor import pdf_saver as ps
+# from legiscrapor import selsearch
 from legiscrapor.legissouthafrica import legisSouthAfrica
+
+# import datetime
+# import re
+# import time
+
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support.wait import WebDriverWait
+
 
 
 
@@ -34,11 +38,13 @@ Select from:
 3=Acts
 4=Other Bills
 """
+
 parser = argparse.ArgumentParser(description=docstring)
 parser.add_argument('webpage', metavar='webpage', type=int,
                     help='Webpage to process.' + webpage_help)
-parser.add_argument('driver', help='Path for Chromedriver')
-parser.add_argument('-path', help='Path for PDF downloads')
+parser.add_argument('--driver', '-d', default=ChromeDriverManager().install(),
+                    help='Path for Chromedriver')
+parser.add_argument('--path', '-p', help='Path for PDF downloads')
 
 args = parser.parse_args()
 download_path = str(args.path)
