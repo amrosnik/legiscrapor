@@ -28,8 +28,6 @@ import os
 # from selenium.webdriver.support.wait import WebDriverWait
 
 
-
-
 # ARGPARSE: args for this script.
 docstring = 'Extract legislation PDFs from South African Parliament website.'
 webpage_help = """
@@ -45,12 +43,12 @@ parser.add_argument('webpage', metavar='webpage', type=int,
                     help='Webpage to process.' + webpage_help)
 parser.add_argument('--driver', '-d', default=ChromeDriverManager().install(),
                     help='Path for Chromedriver')
-parser.add_argument('--path', '-p', default=None, help='Path for PDF downloads')
+parser.add_argument('--path', '-p', default=None,
+                    help='Path for PDF downloads')
 
 args = parser.parse_args()
-if args.path is None:
+if args.path is not None:
     download_path = str(args.path)
-
 else:
     download_path = 'south_africa_output'
     if not os.path.exists(download_path):
