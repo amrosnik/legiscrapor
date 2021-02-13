@@ -37,20 +37,12 @@ can be found in **legisX.py** files, where "X" is the country name in lowercase
 letters with no non-letter characters.
 
 The code for actually running an end-to-end web crawl is found in **run_X.py** files. 
-Currently these take input arguments from the command line, but hopefully 
-this will change soon to take a more easily customizable list of inputs 
-from a plain text file. 
+These take input arguments from a plain text file. See `inputs/` for example input files. 
 
 The general usage is:
-> python run_X.py /path/to/chromedriver -path /path/to/downloads/
+> python run_X.py /path/to/input_file 
 
 The downloads folder need not exist prior to running the script. 
 Please install both Selenium and ChromeDriver before using this. 
 **It's important to have a slash at the end of the downloads path!** 
 
-There is an extra argument for South Africa for now, because its website 
-has legislation in different sections, and that additional arg specifies which 
-section to peruse. So, for South Africa, one would run 
-> python run_southafrica.py /path/to/chromedriver num_code -path /path/to/downloads/
-
-where **num_code** is one of four integers: 1 (to get the Constitution), 2 (to get Mandates), 3 (to get Acts), or 4 (for Bills). 
