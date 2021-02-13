@@ -7,27 +7,15 @@ and added lots of custom functionality.
 """
 
 import argparse
+import os
+import sys
+from pathlib import Path
 
 import pandas as pd
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-# from legiscrapor import nlpIE
-# from legiscrapor import pdf_saver as ps
-# from legiscrapor import selsearch
 from legiscrapor.legissouthafrica import legisSouthAfrica
-
-# import datetime
-# import re
-# import time
-import os
-import sys
-from pathlib import Path
-
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.support.wait import WebDriverWait
 
 docstring = """
 Extract legislation PDFs from the website for
