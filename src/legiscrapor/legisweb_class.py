@@ -173,22 +173,22 @@ class legisWeb():
     mfile = open(path+'/deleted-files_'+specs+'.txt', 'w')
     if files_path == '':
         files_path = self.downloadPath
-
-    for fname in os.listdir(files_path):
-       pathy = os.path.join(files_path, fname)
-       if pathy in exceptions and len(exceptions) > 0:
-           # *exceptions* is a list of files to exclude from this deletion process
-           continue
-       elif os.path.isdir(pathy):
-           # skip directories
-           continue
-       else:
-           if os.path.isfile(pathy):
-               #print("Now deleting..."+pathy)
-               mfile.write(pathy)
-               mfile.write('\n')
-               mfile.write(' \n')
-               os.remove(pathy)
+    if os.path.exists(files_path):
+      for fname in os.listdir(files_path):
+        pathy = os.path.join(files_path, fname)
+        if pathy in exceptions and len(exceptions) > 0:
+            # *exceptions* is a list of files to exclude from this deletion process
+            continue
+        elif os.path.isdir(pathy):
+            # skip directories
+            continue
+        else:
+            if os.path.isfile(pathy):
+                #print("Now deleting..."+pathy)
+                mfile.write(pathy)
+                mfile.write('\n')
+                mfile.write(' \n')
+                os.remove(pathy)
     mfile.close()
 
   def get_dropdown_words(self):

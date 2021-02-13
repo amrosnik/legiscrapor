@@ -21,6 +21,7 @@ from legiscrapor.legissouthafrica import legisSouthAfrica
 # import re
 # import time
 import os
+import sys
 from pathlib import Path
 
 # from selenium.webdriver.common.by import By
@@ -28,9 +29,11 @@ from pathlib import Path
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.support.wait import WebDriverWait
 
+docstring = """
+Extract legislation PDFs from the website for
+South African Parliament.
+"""
 
-# ARGPARSE: args for this script.
-docstring = 'Extract legislation PDFs from South African Parliament website.'
 webpage_help = """
 Select from:
 1=Constitution
@@ -39,99 +42,100 @@ Select from:
 4=Other Bills
 """
 
-parser = argparse.ArgumentParser(description=docstring)
-parser.add_argument('webpage', metavar='webpage', type=int,
-                    help='Webpage to process.' + webpage_help)
-parser.add_argument('--driver', '-d', default=ChromeDriverManager().install(),
-                    help='Path for Chromedriver')
-parser.add_argument('--path', '-p', default=None,
-                    help='Path for PDF downloads')
 
-args = parser.parse_args()
-if args.path is not None:
-    download_path = str(args.path)
-else:
-    current_dir = Path(os.path.abspath(os.curdir))
-    download_path = current_dir / 'south_africa_output'
-    download_path = str(download_path)  # legiscrapor wants strings for paths
-    if not os.path.exists(download_path):
-        os.mkdir(download_path)
+def parse_args(args):
+    """Parse command line parameters
+
+    Args:
+      args ([str]): command line parameters as list of strings
+
+    Returns:
+      :obj:`argparse.Namespace`: command line parameters namespace
+    """
+    parser = argparse.ArgumentParser(description=docstring)
+    parser.add_argument('webpage', metavar='webpage', type=int,
+                        help='Webpage to process.' + webpage_help)
+    parser.add_argument('--driver', '-d',
+                        default=ChromeDriverManager().install(),
+                        help='Path for Chromedriver')
+    parser.add_argument('--path', '-p',
+                        default=None,
+                        help='Path for PDF downloads')
+
+    args = parser.parse_args()
+    return args
 
 
-# setting up options for Chromedriver
-# mostly to ensure any PDF links automatically
-# download the PDFs to download_path
-options = webdriver.ChromeOptions()
-options.add_experimental_option('prefs', {
-    "download.default_directory": download_path,  # Default dir downloads
-    "download.prompt_for_download": False,  # to auto download the file
-    "download.directory_upgrade": True,
-    "plugins.always_open_pdf_externally": True  # don't show PDF in chrome
-})
+def main(args):
+    """Main entry point allowing external calls
 
-pd.options.display.max_colwidth = 1000
-keywords = ['legal aid']
+    Args:
+      args ([str]): command line parameter list
+    """
+    args = parse_args(args)
+    if args.path is not None:
+        download_path = str(args.path)
+    else:
+        current_dir = Path(os.path.abspath(os.curdir))
+        download_path = current_dir / 'south_africa_output'
+        download_path = str(download_path)  # class wants strings for paths
+        if not os.path.exists(download_path):
+            os.mkdir(download_path)
 
-# keywords = ['legal aid',
-#           'legal assistance',
-#           'legal service',
-#           'judicial assistance']
+    # setting up options for Chromedriver
+    # mostly to ensure any PDF links automatically
+    # download the PDFs to download_path
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('prefs', {
+        "download.default_directory": download_path,  # Default dir downloads
+        "download.prompt_for_download": False,  # to auto download the file
+        "download.directory_upgrade": True,
+        "plugins.always_open_pdf_externally": True  # don't show PDF in chrome
+    })
 
-new_za = legisSouthAfrica(args.driver, download_path, options)
-new_za.checkers()
+    pd.options.display.max_colwidth = 1000
+    keywords = ['legal aid']  # TODO: take these as command-line options?
 
-if args.webpage == 1:
-    matches_constit = new_za.run_constitution(keywords)
-    specs = 'SouthAfrica-constit'
-    new_za_const = new_za.downloadPath + '/constit'
-    if len(matches_constit) > 0:
-        print(matches_constit)
-        new_za.print_matches(matches_constit, specs)
-        new_za.delete_no_matches(specs, path=new_za_const)
+    # keywords = ['legal aid',
+    #           'legal assistance',
+    #           'legal service',
+    #           'judicial assistance']
+
+    new_za = legisSouthAfrica(args.driver, download_path, options)
+    new_za.checkers()
+
+    if args.webpage == 1:
+        scrape(new_za, keywords, 'constit')
+    elif args.webpage == 2:
+        scrape(new_za, keywords, 'mandates')
+    elif args.webpage == 3:
+        scrape(new_za, keywords, 'acts')
+    elif args.webpage == 4:
+        scrape(new_za, keywords, 'bills')
+    else:
+        error_msg = 'ERROR: webpage integer indicator not found.'
+        raise ValueError(error_msg + webpage_help)
+
+
+def scrape(new_za, keywords: list, page_type: str):
+    matches = new_za.run_bills(keywords)
+    specs = 'SouthAfrica-' + page_type
+    download_path = new_za.downloadPath + '/' + page_type
+    if matches:
+        print(matches)
+        new_za.print_matches(matches, specs)
+        new_za.delete_no_matches(specs, path=download_path)
     else:
         new_za.delete_unneeded_files('duplicates-nomatch-' + specs, [],
-                                     files_path=new_za_const)
+                                     files_path=download_path)
 
-elif args.webpage == 2:
-    matches_mandates = new_za.run_mandates(keywords)
-    specs = 'SouthAfrica-mandates'
-    new_za_mandates = new_za.downloadPath + '/mandates'
-    if len(matches_mandates) > 0:
-        print(matches_mandates)
-        new_za.print_matches(matches_mandates, specs)
-        new_za.delete_no_matches(specs, path=new_za_mandates)
-    else:
-        new_za.delete_unneeded_files('duplicates-nomatch-'+specs, [],
-                                     files_path=new_za_mandates)
-
-elif args.webpage == 3:
-    matches_acts = new_za.run_acts(keywords)
-    specs = 'SouthAfrica-acts'
-    new_za_acts = new_za.downloadPath + '/acts'
-    if len(matches_acts) > 0:
-        print(matches_acts)
-        new_za.print_matches(matches_acts, specs)
-        new_za.delete_no_matches(specs, path=new_za_acts)
-    else:
-        new_za.delete_unneeded_files('duplicates-nomatch-' + specs, [],
-                                     files_path=new_za_acts)
-
-elif args.webpage == 4:
-    matches_bills = new_za.run_bills(keywords)
-    specs = 'SouthAfrica-bills'
-    new_za_bills = new_za.downloadPath+'/bills'
-    if len(matches_bills) > 0:
-        print(matches_bills)
-        new_za.print_matches(matches_bills, specs)
-        new_za.delete_no_matches(specs, path=new_za_bills)
-    else:
-        new_za.delete_unneeded_files('duplicates-nomatch-' + specs, [],
-                                     files_path=new_za_bills)
+    new_za.delete_unneeded_files('duplicates-' + specs, [])
+    new_za.teardown()
 
 
-else:
-    error_msg = 'ERROR: webpage integer indicator not found.'
-    raise ValueError(error_msg + webpage_help)
+def run():
+    main(sys.argv[1:])
 
-new_za.delete_unneeded_files('duplicates-' + specs, [])
-new_za.teardown()
+
+if __name__ == '__main__':
+    run()
