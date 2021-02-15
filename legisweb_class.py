@@ -13,6 +13,7 @@ import selsearch
 import re
 import nlpIE
 import pdf_saver as ps 
+import glob 
 
 #### ######## ######## ######## ########
 #### This is the generic class used to 
@@ -46,6 +47,8 @@ class legisWeb():
       self.inputs[0] = self.inputs[0].strip(" \n") 
       # 2nd argument: downloadPath
       self.downloadPath = self.inputs[1].strip(" \n")
+      if not os.path.exists(self.downloadPath):
+         os.makedirs(self.downloadPath)
       # 3rd argument: main website
       self.website = self.inputs[2].strip(" \n")
       # 4th argument: country
@@ -200,9 +203,11 @@ class legisWeb():
       matches = selsearch.find_keywords_from_links(self.driver,n_elements,pattern,keywords,waittime=5,min_count=self.mincount)
       return(matches)
 
-  def print_matches(self,matches,specs,path=os.getcwd()): 
+  def print_matches(self,matches,specs): 
+  #def print_matches(self,matches,specs,path=os.getcwd()): 
       ## method for printing a matches list, which is a list of file names that had relevant keywords found in them
-      mfile = open(path+'/matches_'+specs+'.txt', 'w')
+      mfile = open(os.path.join(self.downloadPath,'matches_'+specs+'.txt'), 'w')
+      #mfile = open(path+'/matches_'+specs+'.txt', 'w')
 
       for m in matches:
          mfile.write(m)
@@ -211,12 +216,25 @@ class legisWeb():
       mfile.close()
 
   def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd()):
+  #def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd()):
       ## delete files not deemed likely candidates by scan_pdfs(), 
       ## but save a plain text file of the file names in case someone is curious. 
-      mfile = open(path+'/deleted-files_'+specs+'.txt', 'w')
+      dfile = os.path.join(self.downloadPath,'deleted-files_'+specs+'.txt')
+      mfile = open(dfile, 'w')
+      #mfile = open(os.path.join(path,'deleted-files_'+specs+'.txt'), 'w')
       if files_path == '':
           files_path = self.downloadPath
-    
+   
+      ## add these to exceptions just in case path = self.downloadPath
+      bfiles = glob.glob(os.path.join(self.downloadPath,'matches_*.txt'))
+      for bfile in bfiles:
+         if os.path.isfile(bfile):
+            exceptions.append(bfile)
+      nfiles = glob.glob(os.path.join(self.downloadPath,'deleted-files_*.txt'))
+      for nfile in nfiles:
+         if os.path.isfile(nfile):
+            exceptions.append(nfile)
+
       if os.path.isdir(files_path):
          for fname in os.listdir(files_path):
             pathy = os.path.join(files_path, fname)
@@ -248,7 +266,8 @@ class legisWeb():
   def delete_no_matches(self,specs,path=os.getcwd()): 
       ## let's delete any files not saved in the matches plain text file:
       match_exceptions = [] 
-      with open(os.path.join(os.getcwd(), 'matches_'+specs+'.txt'), 'r') as f:
+      with open(os.path.join(self.downloadPath,'matches_'+specs+'.txt'), 'r') as f:
+      #with open(os.path.join(os.getcwd(), 'matches_'+specs+'.txt'), 'r') as f:
          lines = f.readlines()
          for line in lines:
             if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.

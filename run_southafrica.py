@@ -41,8 +41,8 @@ if new_za.webpage == 1:
         new_za.print_matches(matches_constit,specs)
         new_za.delete_no_matches(specs,path=new_za.downloadPath+'constit')
     else:
-        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'constit')
-    new_za.delete_unneeded_files('duplicates-'+specs,[])
+        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'constit',path=new_za.downloadPath)
+    new_za.delete_unneeded_files('duplicates-'+specs,[],path=new_za.downloadPath)
     new_za.teardown()
 elif new_za.webpage == 2: 
     matches_mandates = new_za.run_mandates(new_za.keywords)
@@ -52,8 +52,8 @@ elif new_za.webpage == 2:
         new_za.print_matches(matches_mandates,specs)
         new_za.delete_no_matches(specs,path=new_za.downloadPath+'mandates')
     else:
-        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'mandates')
-    new_za.delete_unneeded_files('duplicates-'+specs,[])
+        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'mandates',path=new_za.downloadPath)
+    new_za.delete_unneeded_files('duplicates-'+specs,[],path=new_za.downloadPath)
     new_za.teardown()
 elif new_za.webpage == 3: 
     matches_acts = new_za.run_acts(new_za.keywords)
@@ -63,8 +63,8 @@ elif new_za.webpage == 3:
         new_za.print_matches(matches_acts,specs)
         new_za.delete_no_matches(specs,path=new_za.downloadPath+'acts')
     else:
-        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'acts')
-    new_za.delete_unneeded_files('duplicates-'+specs,[])
+        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'acts',path=new_za.downloadPath)
+    new_za.delete_unneeded_files('duplicates-'+specs,[],path=new_za.downloadPath)
     new_za.teardown()
 elif new_za.webpage == 4: 
     matches_bills = new_za.run_bills(new_za.keywords)
@@ -74,8 +74,8 @@ elif new_za.webpage == 4:
         new_za.print_matches(matches_bills,specs)
         new_za.delete_no_matches(specs,path=new_za.downloadPath+'bills')
     else:
-        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'bills')
-    new_za.delete_unneeded_files('duplicates-'+specs,[])
+        new_za.delete_unneeded_files('duplicates-nomatch-'+specs,[],files_path=new_za.downloadPath+'bills',path=new_za.downloadPath)
+    new_za.delete_unneeded_files('duplicates-'+specs,[],path=new_za.downloadPath)
     new_za.teardown()
 else: 
     print("ERROR: webpage integer indicator not found. Try 1=Constitution,2=Mandates,3=Acts,4=Other Bills.")

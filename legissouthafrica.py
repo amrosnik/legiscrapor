@@ -228,16 +228,6 @@ class legisSouthAfrica(legisWeb):
     # TODO: WARNING: This is broken. It is unreasonable to search literally ALL the links on the Other Bills page.
     # Do Bills, in the context of South Africa, matter? Bills aren't laws yet. Do we only care about actual, in-place laws?  
 
-  def print_matches(self,matches,specs,path=os.getcwd()): 
-      ## method for printing a matches list, which is a list of file names that had relevant keywords found in them
-      mfile = open(path+'/matches_'+specs+'.txt', 'w')
-
-      for m in matches:
-         mfile.write(m)
-         mfile.write('\n')
-         mfile.write(' \n')
-      mfile.close()
-
 
 
 
