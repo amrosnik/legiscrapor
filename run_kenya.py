@@ -46,7 +46,7 @@ if len(matches_files) > 0:
     new_kenya.print_matches(matches_files,specs)
 
 ## let's delete any files not moved into the final destination folder (which means they're duplicates): 
-new_kenya.delete_unneeded_files('duplicates-'+specs,[])
+new_kenya.delete_unneeded_files('duplicates-'+specs,[],path=new_kenya.downloadPath)
 
 new_kenya.delete_no_matches(specs,path=new_kenya.downloadPath+'final')
 new_kenya.teardown()

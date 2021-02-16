@@ -213,10 +213,14 @@ class legisWeb():
          mfile.write(' \n')
       mfile.close()
 
-  def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd()):
+  def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd(),moveNotDelete=False):
       ## delete files not deemed likely candidates by scan_pdfs(), 
       ## but save a plain text file of the file names in case someone is curious. 
-      dfile = os.path.join(self.downloadPath,'deleted-files_'+specs+'.txt')
+      ## if moveNotDelete is True, then the files get moved to a new dir instead of deleted. 
+      if moveNotDelete:
+         dfile = os.path.join(self.downloadPath,'moved-files_'+specs+'.txt')
+      else:
+         dfile = os.path.join(self.downloadPath,'deleted-files_'+specs+'.txt')
       mfile = open(dfile, 'w')
       if files_path == '':
           files_path = self.downloadPath
@@ -252,7 +256,17 @@ class legisWeb():
                     mfile.write(pathy)
                     mfile.write('\n')
                     mfile.write(' \n')
-                    os.remove(pathy)
+                    if moveNotDelete:
+                        # move files to another dir. 
+                        # I imagine this option will really only be used 
+                        # when one doesn't want to delete files that were search results 
+                        # but NOT NLP matches, hence target_dir isn't an input arg (yet) 
+                        target_dir = os.path.join(files_path,"no-NLP-match")
+                        if not os.path.exists(target_dir):
+                           os.makedirs(target_dir)
+                        shutil.move(pathy, target_dir)
+                    else: 
+                       os.remove(pathy)
       mfile.close()
 
   def get_dropdown_words(self):
@@ -265,8 +279,8 @@ class legisWeb():
      
       return(words)
 
-  def delete_no_matches(self,specs,path=os.getcwd()): 
-      ## let's delete any files not saved in the matches plain text file:
+  def delete_no_matches(self,specs,path=os.getcwd(),moveFiles=True): 
+      ## let's move OR delete any files not saved in the matches plain text file:
       match_exceptions = [] 
       with open(os.path.join(self.downloadPath,'matches_'+specs+'.txt'), 'r') as f:
          lines = f.readlines()
@@ -274,7 +288,10 @@ class legisWeb():
             if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
                line = line.split('\n')[0]
                match_exceptions.append(line)
-      self.delete_unneeded_files('no-NLP-match_'+specs,match_exceptions,files_path=path)
+      if moveFiles:
+         self.delete_unneeded_files('no-NLP-match_'+specs,match_exceptions,files_path=path,moveNotDelete=True)
+      else:
+         self.delete_unneeded_files('no-NLP-match_'+specs,match_exceptions,files_path=path,moveNotDelete=False)
 
 
 
