@@ -204,10 +204,8 @@ class legisWeb():
       return(matches)
 
   def print_matches(self,matches,specs): 
-  #def print_matches(self,matches,specs,path=os.getcwd()): 
       ## method for printing a matches list, which is a list of file names that had relevant keywords found in them
       mfile = open(os.path.join(self.downloadPath,'matches_'+specs+'.txt'), 'w')
-      #mfile = open(path+'/matches_'+specs+'.txt', 'w')
 
       for m in matches:
          mfile.write(m)
@@ -216,12 +214,10 @@ class legisWeb():
       mfile.close()
 
   def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd()):
-  #def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd()):
       ## delete files not deemed likely candidates by scan_pdfs(), 
       ## but save a plain text file of the file names in case someone is curious. 
       dfile = os.path.join(self.downloadPath,'deleted-files_'+specs+'.txt')
       mfile = open(dfile, 'w')
-      #mfile = open(os.path.join(path,'deleted-files_'+specs+'.txt'), 'w')
       if files_path == '':
           files_path = self.downloadPath
    
@@ -242,8 +238,14 @@ class legisWeb():
                 # *exceptions* is a list of files to exclude from this deletion process
                 continue
             elif os.path.isdir(pathy):
-                # skip directories
-                continue
+                if "temp_images" in pathy:
+                    # remove the temp_images/ dir created by pdf_saver 
+                    # when a PDF needs to be converted to multiple image files 
+                    # to improve analysis
+                    shutil.rmtree(pathy)
+                else:
+                    # skip directories
+                    continue
             else:
                 if os.path.isfile(pathy):
                     #print("Now deleting..."+pathy)
@@ -267,7 +269,6 @@ class legisWeb():
       ## let's delete any files not saved in the matches plain text file:
       match_exceptions = [] 
       with open(os.path.join(self.downloadPath,'matches_'+specs+'.txt'), 'r') as f:
-      #with open(os.path.join(os.getcwd(), 'matches_'+specs+'.txt'), 'r') as f:
          lines = f.readlines()
          for line in lines:
             if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
