@@ -36,16 +36,17 @@ actually contain those keywords!
 
 General software (please search for your operating system for instructions):
 * Chromedriver 
+* webdriver-manager
 
 Python packages (these all can be installed via `pip`, and probably other alternatives): 
-* Selenium
-* argparse
+* selenium
 * numpy
 * pandas
 * spacy
 * pytesseract
-* PIL 
 * wand.image 
+
+A crucial Python package to install is `spacy` for Python-friendly natural language models. Check the [spacy website](https://spacy.io/usage) for updated installation instructions. It requires `pip`, but it is important to first install `setuptools` and `wheel`, as well as download *all* necessary language models prior to running this package.  
 
 ## Modules 
 
