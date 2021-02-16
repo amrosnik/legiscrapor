@@ -8,7 +8,7 @@
 
 ## download folder path. This folder, which may or may not exist yet, is where all the downloaded PDFs will go for this country. 
 ## you MUST include a slash ( "/" ) at the end. 
-## Example: /home/yourname/downloads/kenya_downloads/  
+## Example: /home/yourname/Downloads/kenya_downloads/  
 
 ## website address
 ## the initial website for the legislative body of the country. 
@@ -25,3 +25,7 @@
 ## keywords 
 ## Please write a comma-separated list of the keywords you want to search the website for. 
 ## Example: legal aid, judicial assistance, legal assistance, legal service
+
+## legislation number: use for South Africa or similar websites
+## for South Africa: 1=Constitution,2=Mandates,3=Acts,4=Other Bills
+## Example: 1

@@ -23,6 +23,7 @@ pip install .[testing]
 ```
 
 This codebase is a collection of Python modules and scripts. 
+
 Selenium is heavily employed to automate clicking through websites. 
 We assume one can find relevant legislation for a topic by downloading PDFs 
 found by searching the website's database for specific keywords, 
@@ -30,6 +31,24 @@ and then using natural language processing (NLP) information exraction (IE)
 to tokenize the text and search for *actual* instances of those keywords. 
 Believe it or not, some website search engines lead to results that don't 
 actually contain those keywords!
+
+## Prerequisites to install
+
+General software (please search for your operating system for instructions):
+* Chromedriver 
+* webdriver-manager
+
+Python packages (these all can be installed via `pip`, and probably other alternatives): 
+* selenium
+* numpy
+* pandas
+* spacy
+* pytesseract
+* wand.image 
+
+A crucial Python package to install is `spacy` for Python-friendly natural language models. Check the [spacy website](https://spacy.io/usage) for updated installation instructions. It requires `pip`, but it is important to first install `setuptools` and `wheel`, as well as download *all* necessary language models prior to running this package.  
+
+## Modules 
 
 The modules are as follows: 
 * **nlpIE.py** : module for NLP IE 
@@ -52,13 +71,13 @@ website mechanics were explored and utilized, there are child classes:
 can be found in **legisX.py** files, where "X" is the country name in lowercase 
 letters with no non-letter characters.
 
+## Execution instructions
+
 The code for actually running an end-to-end web crawl is found in **run_X.py** files. 
-Currently these take input arguments from the command line, but hopefully 
-this will change soon to take a more easily customizable list of inputs 
-from a plain text file. 
+These take input arguments from a plain text file. See `inputs/` for example input files. 
 
 The general usage is:
-> python run_X.py /path/to/chromedriver -path /path/to/downloads/
+> python run_X.py /path/to/input_file 
 **It's important to have a slash at the end of the downloads path!** 
 
 The downloads folder need not exist prior to running the script. 
@@ -71,9 +90,3 @@ sudo apt install ./google-chrome-stable_current_amd64.deb
 ```
 
 
-There is an extra argument for South Africa for now, because its website 
-has legislation in different sections, and that additional arg specifies which 
-section to peruse. So, for South Africa, one would run 
-> python run_southafrica.py /path/to/chromedriver num_code -path /path/to/downloads/
-
-where **num_code** is one of four integers: 1 (to get the Constitution), 2 (to get Mandates), 3 (to get Acts), or 4 (for Bills). 
