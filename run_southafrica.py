@@ -106,7 +106,7 @@ def main(args):
 
 
 def scrape(new_za, keywords: list, page_type: str):
-    matches = new_za.run_bills(keywords)
+    matches = new_za.run(keywords, page_type)
     specs = 'SouthAfrica-' + page_type
     download_path = new_za.downloadPath + '/' + page_type
     if matches:

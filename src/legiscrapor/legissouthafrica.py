@@ -235,16 +235,24 @@ class legisSouthAfrica(legisWeb):
     # TODO: WARNING: This is broken. It is unreasonable to search literally ALL the links on the Other Bills page.
     # Do Bills, in the context of South Africa, matter? Bills aren't laws yet. Do we only care about actual, in-place laws?  
 
-  def print_matches(self,matches,specs,path=os.getcwd()): 
-      ## method for printing a matches list, which is a list of file names that had relevant keywords found in them
-      mfile = open(path+'/matches_'+specs+'.txt', 'w')
-
-      for m in matches:
-         mfile.write(m)
-         mfile.write('\n')
-         mfile.write(' \n')
-      mfile.close()
-
-
+  def run(self,keywords,page_type): 
+      webpage_help = """
+      Select from:
+      1=Constitution
+      2=Mandates
+      3=Acts
+      4=Other Bills
+      """
+      if page_type == 'constit':
+          matches = new_za.run_constitution(keywords)
+      elif page_type = 'mandates':
+          matches = new_za.run_mandates(keywords)
+      elif page_type = 'acts':
+          matches = new_za.run_acts(keywords) 
+      elif page_type = 'bills':
+          matches = new_za.run_bills(keywords)
+      else: 
+          error_msg = 'ERROR: webpage integer indicator not found.'
+          raise ValueError(error_msg + webpage_help)
 
 
