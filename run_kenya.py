@@ -40,14 +40,14 @@ print(len(all_hrefs))
 
 new_kenya.get_pdfs(all_hrefs,path=new_kenya.downloadPath+'final',anotherLink=True)
 specs = 'all-Kenya-laws'
-matches_files = new_kenya.scan_pdfs(new_kenya.downloadPath+'final',keywords)  
+matches_files = new_kenya.scan_pdfs(new_kenya.downloadPath+'final',new_kenya.keywords)  
 if len(matches_files) > 0:
     print(matches_files) 
     new_kenya.print_matches(matches_files,specs)
 
 ## let's delete any files not moved into the final destination folder (which means they're duplicates): 
-new_kenya.delete_unneeded_files('duplicates-'+specs,[],path=new_kenya.downloadPath)
+new_kenya.delete_unneeded_files('duplicates-'+specs,[],path=new_kenya.downloadPath,moveNotDelete=True)
 
-new_kenya.delete_no_matches(specs,path=new_kenya.downloadPath+'final')
+new_kenya.delete_no_matches(specs,path=new_kenya.downloadPath+'final',moveFiles=True)
 new_kenya.teardown()
 

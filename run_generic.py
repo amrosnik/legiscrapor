@@ -44,9 +44,9 @@ if len(all_hrefs) > 0:
          new_web.print_matches(matches_files,specs)
 
       ## let's delete any files not moved into the final destination folder (which means they're duplicates): 
-      new_web.delete_unneeded_files('duplicates-'+specs,[])
+      new_web.delete_unneeded_files('duplicates-'+specs,[],moveNotDelete=True)
  
-      new_web.delete_no_matches(specs,path=new_web.downloadPath+'final')
+      new_web.delete_no_matches(specs,path=new_web.downloadPath+'final',moveFiles=True)
    else: 
       print("womp womp. This search didn't lead to any documents with our keywords in them!") 
 else: 

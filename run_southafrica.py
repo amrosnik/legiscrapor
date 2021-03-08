@@ -86,12 +86,12 @@ def scrape(new_za, keywords: list, page_type: str):
     if matches:
         print(matches)
         new_za.print_matches(matches, specs)
-        new_za.delete_no_matches(specs, path=download_path)
+        new_za.delete_no_matches(specs, path=download_path,moveFiles=True)
     else:
         new_za.delete_unneeded_files('duplicates-nomatch-' + specs, [],
-                                     files_path=download_path,path=new_za.downloadPath)
+                                     files_path=download_path,path=new_za.downloadPath,moveNotDelete=True)
 
-    new_za.delete_unneeded_files('duplicates-' + specs, [], path=new_za.downloadPath)
+    new_za.delete_unneeded_files('duplicates-' + specs, [], path=new_za.downloadPath,moveNotDelete=True)
     new_za.teardown()
 
 

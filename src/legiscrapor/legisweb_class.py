@@ -234,6 +234,10 @@ class legisWeb():
       for nfile in nfiles:
          if os.path.isfile(nfile):
             exceptions.append(nfile)
+      mfiles = glob.glob(os.path.join(self.downloadPath,'moved-files_*.txt'))
+      for m in mfiles:
+         if os.path.isfile(m):
+            exceptions.append(m)
 
       if os.path.isdir(files_path):
          for fname in os.listdir(files_path):

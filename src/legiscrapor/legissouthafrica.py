@@ -246,11 +246,11 @@ class legisSouthAfrica(legisWeb):
       """
       if page_type == 'constit':
           matches = new_za.run_constitution(keywords)
-      elif page_type = 'mandates':
+      elif page_type == 'mandates':
           matches = new_za.run_mandates(keywords)
-      elif page_type = 'acts':
+      elif page_type == 'acts':
           matches = new_za.run_acts(keywords) 
-      elif page_type = 'bills':
+      elif page_type == 'bills':
           matches = new_za.run_bills(keywords)
       else: 
           error_msg = 'ERROR: webpage integer indicator not found.'
