@@ -126,14 +126,14 @@ class legisSouthAfrica(legisWeb):
     base = "https://www.parliament.gov.za"
     self.driver.set_window_size(1324, 752)
     self.driver.get(base+"/acts?sorts[date]=-1&perPage=50&queries[search]="+word)
-    self.driver.implicitly_wait(5)
+    self.driver.implicitly_wait(20)
 
     self.driver.find_element(By.ID, "docfilter").click()
     dropdown = self.driver.find_element(By.ID, "docfilter")
     #print(year,word)
     dropdown.find_element(By.XPATH, "//option[. = "+str(year)+"]").click()
 
-    self.driver.implicitly_wait(10)
+    self.driver.implicitly_wait(20)
     trs = self.driver.find_elements_by_xpath('//tbody/tr/td[@style="text-align: left;"]/a')
     extracted_links = [link.get_attribute('href') for link in trs]
     #table_length = len(extracted_links)
@@ -193,12 +193,12 @@ class legisSouthAfrica(legisWeb):
           all_links = np.append(all_links,links)
           #print("****** ALL_LINKS ******")
           #print(all_links)
-          self.driver.implicitly_wait(60)
+          self.driver.implicitly_wait(100)
           #time.sleep(5)
       #print(all_links)
     for word in keywords:
       for y in range(2005,2020): # The Acts dynamic table is filtered by YEAR and KEYWORD. Hence the double loop.
-      #for y in range(1994,int(datetime.datetime.now().year)+1): # The Acts dynamic table is filtered by YEAR and KEYWORD. Hence the double loop.
+      #for y in range(2005,int(datetime.datetime.now().year)-2): # The Acts dynamic table is filtered by YEAR and KEYWORD. Hence the double loop.
           links = self.search_acts(word,y) # for each keyword + year combo, run dynamic table search
           links = list(set(links))
           #print(y,word)
@@ -207,7 +207,7 @@ class legisSouthAfrica(legisWeb):
           all_links = np.append(all_links,links)
           #print("****** ALL_LINKS ******")
           #print(all_links)
-          self.driver.implicitly_wait(60)
+          self.driver.implicitly_wait(100)
           #time.sleep(5)
       #print(all_links)
     # TODO: create dict for word:all_of_the_links ???
@@ -245,15 +245,17 @@ class legisSouthAfrica(legisWeb):
       4=Other Bills
       """
       if page_type == 'constit':
-          matches = new_za.run_constitution(keywords)
+          matches = self.run_constitution(keywords)
       elif page_type == 'mandates':
-          matches = new_za.run_mandates(keywords)
+          matches = self.run_mandates(keywords)
       elif page_type == 'acts':
-          matches = new_za.run_acts(keywords) 
+          matches = self.run_acts(keywords) 
       elif page_type == 'bills':
-          matches = new_za.run_bills(keywords)
+          matches = self.run_bills(keywords)
       else: 
           error_msg = 'ERROR: webpage integer indicator not found.'
+          matches = []
           raise ValueError(error_msg + webpage_help)
 
+      return(matches)
 

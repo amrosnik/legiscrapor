@@ -83,7 +83,7 @@ def scrape(new_za, keywords: list, page_type: str):
     matches = new_za.run(new_za.keywords, page_type)
     specs = 'SouthAfrica-' + page_type
     download_path = new_za.downloadPath + '/' + page_type
-    if matches:
+    if len(matches) > 0:
         print(matches)
         new_za.print_matches(matches, specs)
         new_za.delete_no_matches(specs, path=download_path,moveFiles=True)
