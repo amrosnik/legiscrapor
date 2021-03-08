@@ -15,6 +15,9 @@ pip install .
 ```
 (PyPi installation available soon)
 
+(This installation depends, of course, on cloning the repo/downloading the ZIP file first 
+and running the above command from within the repo directory.)
+
 ## Development
 Install the test dependencies with:
 
@@ -34,6 +37,9 @@ actually contain those keywords!
 
 ## Prerequisites to install
 
+All the prereqs are now installed through the `pip install` step, 
+but for the sake of clarity, the major dependencies are: 
+
 General software (please search for your operating system for instructions):
 * Chromedriver 
 * webdriver-manager
@@ -46,7 +52,7 @@ Python packages (these all can be installed via `pip`, and probably other altern
 * pytesseract
 * wand.image 
 
-A crucial Python package to install is `spacy` for Python-friendly natural language models. Check the [spacy website](https://spacy.io/usage) for updated installation instructions. It requires `pip`, but it is important to first install `setuptools` and `wheel`, as well as download *all* necessary language models prior to running this package.  
+A crucial Python package to install is `spacy` for Python-friendly natural language models. Check the [spacy website](https://spacy.io/usage) for updated installation instructions. It requires `pip`, but it is important to first install `setuptools` and `wheel`, as well as download *all* necessary language models prior to running this package. Currently the `nlpIE` module attempts to download any necessary but missing language models; please follow that convention when adding more language models to the codebase.  
 
 ## Modules 
 
@@ -89,4 +95,5 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 ```
 
+For Windows: look at [this guide](http://jonathansoma.com/lede/foundations-2018/classes/selenium/selenium-windows-install/). 
 
