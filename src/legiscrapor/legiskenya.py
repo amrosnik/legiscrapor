@@ -9,23 +9,24 @@ import pandas as pd
 import numpy as np 
 import os
 import shutil 
-import selsearch
 import re
-import nlpIE
-import pdf_saver as ps 
-from legisweb_class import legisWeb
+from legiscrapor import nlpIE
+from legiscrapor import pdf_saver as ps 
+from legiscrapor import selsearch
+from legiscrapor.legisweb_class import legisWeb
 
 class legisKenya(legisWeb):
 
-  def __init__(self, driverLocation,downloadPath,options):
-      super().__init__(driverLocation,downloadPath,options)
+  def __init__(self):
+  #def __init__(self, driverLocation,downloadPath,options):
+      super().__init__()
       self.country = "Kenya" 
 
-  def search_laws(self,website,keyword):
+  def search_laws(self,keyword):
     ## This function overwrites legisWeb.search_laws() 
     ## since we know specifically how Kenya's website works. 
 
-    self.driver.get(website) 
+    self.driver.get(self.website) 
     self.driver.set_window_size(1324, 752)
     self.driver.find_element(By.LINK_TEXT, "Laws of Kenya").click() 
     self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(3) em").click()

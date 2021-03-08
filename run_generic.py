@@ -2,7 +2,7 @@ import argparse
 from selenium import webdriver
 import pandas as pd
 import os
-from legisweb_class import legisWeb
+from legiscrapor.legisweb_class import legisWeb
 import numpy as np 
 
 ####### LET'S RUN A GENERIC WEB CRAWL ####### 
@@ -13,35 +13,22 @@ import numpy as np
 ####### SETUP ####### 
 ## ARGPARSE: args for this script. 
 parser = argparse.ArgumentParser(description='Extract PDFs of legislation from South African Parliament website.')
-#parser.add_argument('webpage', metavar='webpage', type=int, 
-#                    help='webpage to process. 1=Constitution,2=Mandates,3=Acts,4=Other Bills')
-parser.add_argument('driver',help='Path for Chromedriver')
-parser.add_argument('-path',help='Path for PDF downloads')
+parser.add_argument('input',help='Path to input file')
 
 args = parser.parse_args()
-download_path = str(args.path)
-
-## setting up options for Chromedriver, mostly to ensure any PDF links automatically download the PDFs to download_path
-options = webdriver.ChromeOptions()
-options.add_experimental_option('prefs', {
-"download.default_directory": download_path, #Change default directory for downloads
-"download.prompt_for_download": False, #To auto download the file
-"download.directory_upgrade": True,
-"plugins.always_open_pdf_externally": True #It will not show PDF directly in chrome
-})
 
 ####### THE GOOD STUFF ####### 
 
-new_web = legisWeb(args.driver,download_path,options)
+new_web = legisWeb()
+new_web.read_inputs(args.input)
 new_web.checkers()
 
 pd.options.display.max_colwidth = 1000
-keywords =[ 'judicial assistance']
+#keywords =[ 'judicial assistance']
 
-website = "http://kenyalaw.org/kl/"
 all_hrefs = []
-for k in keywords:
-   hrefs = new_web.search_laws(website,k)
+for k in new_web.keywords:
+   hrefs = new_web.search_laws(k)
    all_hrefs.append(hrefs)
 
 if len(all_hrefs) > 0: 
@@ -57,9 +44,9 @@ if len(all_hrefs) > 0:
          new_web.print_matches(matches_files,specs)
 
       ## let's delete any files not moved into the final destination folder (which means they're duplicates): 
-      new_web.delete_unneeded_files('duplicates-'+specs,[])
+      new_web.delete_unneeded_files('duplicates-'+specs,[],moveNotDelete=True)
  
-      new_web.delete_no_matches(specs,path=new_web.downloadPath+'final')
+      new_web.delete_no_matches(specs,path=new_web.downloadPath+'final',moveFiles=True)
    else: 
       print("womp womp. This search didn't lead to any documents with our keywords in them!") 
 else: 
