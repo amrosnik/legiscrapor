@@ -213,6 +213,7 @@ class legisWeb():
          mfile.write(' \n')
       mfile.close()
 
+
   def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd(),moveNotDelete=False):
       ## delete files not deemed likely candidates by scan_pdfs(), 
       ## but save a plain text file of the file names in case someone is curious. 
@@ -226,18 +227,23 @@ class legisWeb():
           files_path = self.downloadPath
    
       ## add these to exceptions just in case path = self.downloadPath
+      all_excepts = []
       bfiles = glob.glob(os.path.join(self.downloadPath,'matches_*.txt'))
-      for bfile in bfiles:
-         if os.path.isfile(bfile):
-            exceptions.append(bfile)
+      for b in bfiles:
+         all_excepts.append(b)
       nfiles = glob.glob(os.path.join(self.downloadPath,'deleted-files_*.txt'))
-      for nfile in nfiles:
-         if os.path.isfile(nfile):
-            exceptions.append(nfile)
+      for n in nfiles:
+         all_excepts.append(n)
       mfiles = glob.glob(os.path.join(self.downloadPath,'moved-files_*.txt'))
       for m in mfiles:
-         if os.path.isfile(m):
-            exceptions.append(m)
+         all_excepts.append(m)
+      lfiles = glob.glob(os.path.join(self.downloadPath,'low_*.txt'))
+      for l in lfiles:
+         all_excepts.append(l)
+      print(all_excepts)
+      for a in all_excepts:
+         if os.path.isfile(a):
+            exceptions.append(a)
 
       if os.path.isdir(files_path):
          for fname in os.listdir(files_path):
@@ -285,13 +291,23 @@ class legisWeb():
 
   def delete_no_matches(self,specs,path=os.getcwd(),moveFiles=True): 
       ## let's move OR delete any files not saved in the matches plain text file:
-      match_exceptions = [] 
-      with open(os.path.join(self.downloadPath,'matches_'+specs+'.txt'), 'r') as f:
-         lines = f.readlines()
-         for line in lines:
-            if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
-               line = line.split('\n')[0]
-               match_exceptions.append(line)
+      match_exceptions = []
+      matches = os.path.join(self.downloadPath,'matches_'+specs+'.txt')
+      matches_in_path = os.path.join(path,'matches_'+specs+'.txt')
+      if os.path.exists(matches):
+         with open(matches, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+               if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
+                  line = line.split('\n')[0]
+                  match_exceptions.append(line)
+      if os.path.exists(matches_in_path):
+         with open(matches_in_path, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+               if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
+                  line = line.split('\n')[0]
+                  match_exceptions.append(line)
       if moveFiles:
          self.delete_unneeded_files('no-NLP-match_'+specs,match_exceptions,files_path=path,moveNotDelete=True)
       else:
