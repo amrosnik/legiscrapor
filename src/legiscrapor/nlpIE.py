@@ -25,6 +25,7 @@ def load_lang_model(lang):
         except OSError:
             print("Missing spacy module, attempting download.")
             os.system('python3 -m spacy download en_core_web_sm')
+            os.system('python -m spacy download en_core_web_sm') # in case the above command doesn't work...
             nlp = spacy.load('en_core_web_sm', disable=['ner', 'textcat'])
     else: 
         raise ValueError("ERROR: CODE CURRENTLY DOES NOT SUPPORT LANGUAGES OTHER THAN ENGLISH") 
