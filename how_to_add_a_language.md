@@ -13,14 +13,14 @@ way to refer to the new language in the variable `lang` -- for example,
 English is called "English".  
 
 Within the new `elif` block, attempt to load the appropriate `spacy` library.
-Please follow the exception handlign convention established for English.  
+Please follow the exception handling convention established for English.  
 A list of up-to-date language supported in `spacy` language models is [here](https://spacy.io/usage/models),
 along with how to refer to them in the `spacy.load()` function call.  
 
 Lastly, as a final detail: update the `ValueError` raised so that it precisely states 
 which languages the codebase now supports. 
 
-## 2. Add a ne witem to the dictionary in get_dropdown_words() 
+## 2. Add a new item to the dictionary in get_dropdown_words() 
   
 The method `get_dropdown_words()` of the parent class `legisWeb` contains 
 a dictionary, `dropdown_words`, that saves common legislative words 
