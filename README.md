@@ -81,6 +81,9 @@ letters with no non-letter characters.
 
 The code for actually running an end-to-end web crawl is found in **run_X.py** files. 
 These take input arguments from a plain text file. See `inputs/` for example input files. 
+Note that the keywords you specify in input files are first subjected to whatever 
+search engine powers the search functionality of a particular legislative website; 
+therefore, using advanced Google search engine syntax is ill-advised. 
 
 The general usage is:
 > python run_X.py /path/to/input_file 
