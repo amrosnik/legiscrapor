@@ -1,17 +1,14 @@
-import pdfminer.high_level as ph 
-import os
-from os.path import join
-import pytesseract
-from PIL import Image
-from wand.image import Image as wandimage
 import glob 
-import nlpIE
+from legiscrapor import nlpIE
+from legiscrapor import pdf_saver as ps 
 import pandas as pd 
-import pdf_saver as ps 
+from os.path import join 
 
+"""
+keywords = ['legal aid','judicial assistance']
 example_law_files = []
 for ext in ('*.doc','*.docx','*.pdf'):
-    example_law_files.extend(glob.glob(join('../../Documents/WORLD/Examples_of_laws/',ext)))
+    example_law_files.extend(glob.glob(join('./src/legiscrapor/data/pdfsaver_docs/',ext)))
 
 df = pd.DataFrame()
 i = 0 
@@ -23,4 +20,5 @@ for law in example_law_files:
     df.loc[i,'Example_number'] = i + 1
     i += 1
 
-nlpIE.legal_aid_nlp_ie(df)
+matches = nlpIE.full_nlp_ie(df,keywords,'English',1)
+"""

@@ -30,12 +30,14 @@ class legisWeb():
       self.language = "English" ## the default language is English 
       self.mincount = 1 ## the default number of keyword occurrences that must occur in a document. 
   
-  def read_inputs(self,inputFile):
+  def read_inputs(self,inputFile,notTesting=True):
       ## setting up the class based on data from inputFile, which is a plain text file. 
       ## The most important bit is to initialize the chromedriver 
       ## using a local driver location and various options...but this will be done in another function. 
       ## here we merely grab the strings needed to do so later.
-     
+      
+      ## notTesting is a boolean value to distinguish if we are in a testing mode (notTesting = False) 
+      ## or not (the default value, notTesting = True) 
       self.inputs = []
       with open(inputFile, "r") as f:
           lines = f.readlines()
@@ -47,8 +49,8 @@ class legisWeb():
       self.inputs[0] = self.inputs[0].strip(" \n") 
       # 2nd argument: downloadPath
       self.downloadPath = self.inputs[1].strip(" \n")
-      if not os.path.exists(self.downloadPath):
-         os.makedirs(self.downloadPath)
+      if notTesting and not os.path.exists(self.downloadPath):
+          os.makedirs(self.downloadPath)
       # 3rd argument: main website
       self.website = self.inputs[2].strip(" \n")
       # 4th argument: country
@@ -62,7 +64,8 @@ class legisWeb():
       # (used for South Africa and similar websites that have legislation on different parts of the website)
       self.webpage = int(self.inputs[6].strip(" \n"))
   
-      self.init_driver()
+      if notTesting:
+         self.init_driver()
  
   def init_driver(self):
       ## set up the Chromedriver. 

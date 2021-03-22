@@ -5,6 +5,7 @@ import pandas as pd
 from webdriver_manager.chrome import ChromeDriverManager
 # test-driving Selenium on my own website.
 
+"""
 # dataframe display settings
 pd.set_option('display.max_row', 1050)
 pd.set_option('display.max_column', 16)
@@ -43,3 +44,4 @@ matches = selsearch.find_keywords_from_links(driver, n_elements, pattern, keywor
 
 
 driver.close()
+"""
