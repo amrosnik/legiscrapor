@@ -85,28 +85,26 @@ def sent_subtree(text,patterns):
     return(schemes)
 
 ''' deprecated, but may be useful eventually ''' 
-"""
-def plain_text_full_nlp_ie(path):
-   ## Function that puts it all together.
-   ## path: path to files to examine
-   ## the files should be plain text files. 
-
-   ## search for legal aid keywords
-   files = glob.glob(path+'*txt')
-  
-   ## dummy text that should yield empty results: 
-   ##files = glob.glob('./dummy_text/*txt')
-
-   df = pd.DataFrame()
-   i=0
-   for file in files: 
-      with open(file,encoding='utf8') as f:
-         df.loc[i,'Legislation'] = f.read()
-         df.loc[i,'Example_number'] = i + 1
-         i += 1 
-
-   full_nlp_ie(df)
-"""
+#def plain_text_full_nlp_ie(path):
+#   ## Function that puts it all together.
+#   ## path: path to files to examine
+#   ## the files should be plain text files. 
+#
+#   ## search for legal aid keywords
+#   files = glob.glob(path+'*txt')
+#  
+#   ## dummy text that should yield empty results: 
+#   ##files = glob.glob('./dummy_text/*txt')
+#
+#   df = pd.DataFrame()
+#   i=0
+#   for file in files: 
+#      with open(file,encoding='utf8') as f:
+#         df.loc[i,'Legislation'] = f.read()
+#         df.loc[i,'Example_number'] = i + 1
+#         i += 1 
+#
+#   full_nlp_ie(df)
 
 def full_nlp_ie(df,keywords,language,mincount):
    ## Function that puts it all together.
@@ -114,40 +112,44 @@ def full_nlp_ie(df,keywords,language,mincount):
    ## NOTE: df is a pandas DataFrame following the conventions 
    ## of pdf_saver.scan_pdfs() output!!!  
 
-   # preprocessing legislation text
-   df['Legislation_clean'] = df['Legislation'].apply(clean)
-   df['sentences'] = df['Legislation_clean'].apply(sentences)
-
-   ## create new dataframe where each row is a different sentence,
-   ## with new column displaying sentence character length
-   df2 = pd.DataFrame(columns=['File_name','sent','example_num','len'])
-
-   row_list = []
-
-   for i in range(len(df)):
-       for sent in df.loc[i,'sentences']:
-           wordcount = len(sent.split())
-           year = df.loc[i,'Example_number']
-           file_name = df.loc[i,'File_name']
-           dict1 = {'file_name':file_name,'example_num':year,'sent':sent,'len':wordcount}
-           row_list.append(dict1)
-
-   df2 = pd.DataFrame(row_list)
-   load_lang_model(language) # load in our NLP model for language of choice
-   df2['Schemes'] = df2['sent'].apply(sent_subtree,patterns=keywords)
-
-   example_nums = df2['example_num'].unique().astype(int)
-
-   match_file_names = []
-   for i in example_nums: 
-      non_empty_schemes = df2[df2['Schemes'].map(lambda d: len(d)) > 0]
-      count = len(non_empty_schemes.loc[non_empty_schemes['example_num'] == i])
-      #print(non_empty_schemes.loc[non_empty_schemes['example_num'] == i]['sent'])
-      if count > mincount: 
-          print("***** There is a good chance document # "+str(i)+" is a relevant document. *****")
-          match_file_names.append(non_empty_schemes.loc[non_empty_schemes['example_num'] == i]['file_name'].tolist())
-
-   match_file_names = [item for sublist in match_file_names for item in sublist]
-   match_file_names = np.unique(match_file_names)
+   if len(df) > 0:
+      # preprocessing legislation text
+      df['Legislation_clean'] = df['Legislation'].apply(clean)
+      df['sentences'] = df['Legislation_clean'].apply(sentences)
+ 
+      ## create new dataframe where each row is a different sentence,
+      ## with new column displaying sentence character length
+      df2 = pd.DataFrame(columns=['File_name','sent','example_num','len'])
+ 
+      row_list = []
+ 
+      for i in range(len(df)):
+          for sent in df.loc[i,'sentences']:
+              wordcount = len(sent.split())
+              year = df.loc[i,'Example_number']
+              file_name = df.loc[i,'File_name']
+              dict1 = {'file_name':file_name,'example_num':year,'sent':sent,'len':wordcount}
+              row_list.append(dict1)
+ 
+      df2 = pd.DataFrame(row_list)
+      load_lang_model(language) # load in our NLP model for language of choice
+      df2['Schemes'] = df2['sent'].apply(sent_subtree,patterns=keywords)
+ 
+      example_nums = df2['example_num'].unique().astype(int)
+ 
+      match_file_names = []
+      for i in example_nums: 
+         non_empty_schemes = df2[df2['Schemes'].map(lambda d: len(d)) > 0]
+         count = len(non_empty_schemes.loc[non_empty_schemes['example_num'] == i])
+         #print(non_empty_schemes.loc[non_empty_schemes['example_num'] == i]['sent'])
+         if count > mincount: 
+             print("***** There is a good chance document # "+str(i)+" is a relevant document. *****")
+             match_file_names.append(non_empty_schemes.loc[non_empty_schemes['example_num'] == i]['file_name'].tolist())
+ 
+      match_file_names = [item for sublist in match_file_names for item in sublist]
+      match_file_names = np.unique(match_file_names)
+   else:
+      match_file_names = []
+      
    return(match_file_names)
 
