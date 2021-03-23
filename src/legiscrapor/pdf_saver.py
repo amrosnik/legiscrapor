@@ -20,10 +20,19 @@ def get_text(law):
        ## and try extracting text from the image file 
        if len(text) < 50:
           pdf_file =  law
+          full_file_name = os.path.splitext(pdf_file)
+          base = os.path.basename(full_file_name[0]+full_file_name[1])
+          low_res_path = full_file_name[0] + full_file_name[1] 
+          low_res_path = low_res_path.replace(base,'')
+          print("LOW RESOLUTION PDF FILE:",law)
+          mfile = open(low_res_path+'low_resolution_pdfs.txt', 'a+')
+          mfile.write(law)
+          mfile.write('\n')
+          mfile.write(' \n')
+          mfile.close()
           files = []
           with(wandimage(filename=pdf_file,resolution = 500)) as conn: 
               for index, image in enumerate(conn.sequence):
-                  full_file_name = os.path.splitext(pdf_file)
                   basename = os.path.basename(full_file_name[0]+full_file_name[1])
                   new_path = full_file_name[0] + full_file_name[1] + 'temp_images/'
                   new_path = new_path.replace(basename,'')

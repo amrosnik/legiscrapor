@@ -84,6 +84,8 @@ def sent_subtree(text,patterns):
                     schemes.append(word)
     return(schemes)
 
+''' deprecated, but may be useful eventually ''' 
+"""
 def plain_text_full_nlp_ie(path):
    ## Function that puts it all together.
    ## path: path to files to examine
@@ -104,9 +106,13 @@ def plain_text_full_nlp_ie(path):
          i += 1 
 
    full_nlp_ie(df)
+"""
 
 def full_nlp_ie(df,keywords,language,mincount):
    ## Function that puts it all together.
+
+   ## NOTE: df is a pandas DataFrame following the conventions 
+   ## of pdf_saver.scan_pdfs() output!!!  
 
    # preprocessing legislation text
    df['Legislation_clean'] = df['Legislation'].apply(clean)

@@ -30,12 +30,14 @@ class legisWeb():
       self.language = "English" ## the default language is English 
       self.mincount = 1 ## the default number of keyword occurrences that must occur in a document. 
   
-  def read_inputs(self,inputFile):
+  def read_inputs(self,inputFile,notTesting=True):
       ## setting up the class based on data from inputFile, which is a plain text file. 
       ## The most important bit is to initialize the chromedriver 
       ## using a local driver location and various options...but this will be done in another function. 
       ## here we merely grab the strings needed to do so later.
-     
+      
+      ## notTesting is a boolean value to distinguish if we are in a testing mode (notTesting = False) 
+      ## or not (the default value, notTesting = True) 
       self.inputs = []
       with open(inputFile, "r") as f:
           lines = f.readlines()
@@ -47,8 +49,8 @@ class legisWeb():
       self.inputs[0] = self.inputs[0].strip(" \n") 
       # 2nd argument: downloadPath
       self.downloadPath = self.inputs[1].strip(" \n")
-      if not os.path.exists(self.downloadPath):
-         os.makedirs(self.downloadPath)
+      if notTesting and not os.path.exists(self.downloadPath):
+          os.makedirs(self.downloadPath)
       # 3rd argument: main website
       self.website = self.inputs[2].strip(" \n")
       # 4th argument: country
@@ -62,7 +64,8 @@ class legisWeb():
       # (used for South Africa and similar websites that have legislation on different parts of the website)
       self.webpage = int(self.inputs[6].strip(" \n"))
   
-      self.init_driver()
+      if notTesting:
+         self.init_driver()
  
   def init_driver(self):
       ## set up the Chromedriver. 
@@ -213,6 +216,7 @@ class legisWeb():
          mfile.write(' \n')
       mfile.close()
 
+
   def delete_unneeded_files(self,specs,exceptions,files_path='',path=os.getcwd(),moveNotDelete=False):
       ## delete files not deemed likely candidates by scan_pdfs(), 
       ## but save a plain text file of the file names in case someone is curious. 
@@ -226,18 +230,23 @@ class legisWeb():
           files_path = self.downloadPath
    
       ## add these to exceptions just in case path = self.downloadPath
+      all_excepts = []
       bfiles = glob.glob(os.path.join(self.downloadPath,'matches_*.txt'))
-      for bfile in bfiles:
-         if os.path.isfile(bfile):
-            exceptions.append(bfile)
+      for b in bfiles:
+         all_excepts.append(b)
       nfiles = glob.glob(os.path.join(self.downloadPath,'deleted-files_*.txt'))
-      for nfile in nfiles:
-         if os.path.isfile(nfile):
-            exceptions.append(nfile)
+      for n in nfiles:
+         all_excepts.append(n)
       mfiles = glob.glob(os.path.join(self.downloadPath,'moved-files_*.txt'))
       for m in mfiles:
-         if os.path.isfile(m):
-            exceptions.append(m)
+         all_excepts.append(m)
+      lfiles = glob.glob(os.path.join(self.downloadPath,'low_*.txt'))
+      for l in lfiles:
+         all_excepts.append(l)
+      print(all_excepts)
+      for a in all_excepts:
+         if os.path.isfile(a):
+            exceptions.append(a)
 
       if os.path.isdir(files_path):
          for fname in os.listdir(files_path):
@@ -285,13 +294,23 @@ class legisWeb():
 
   def delete_no_matches(self,specs,path=os.getcwd(),moveFiles=True): 
       ## let's move OR delete any files not saved in the matches plain text file:
-      match_exceptions = [] 
-      with open(os.path.join(self.downloadPath,'matches_'+specs+'.txt'), 'r') as f:
-         lines = f.readlines()
-         for line in lines:
-            if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
-               line = line.split('\n')[0]
-               match_exceptions.append(line)
+      match_exceptions = []
+      matches = os.path.join(self.downloadPath,'matches_'+specs+'.txt')
+      matches_in_path = os.path.join(path,'matches_'+specs+'.txt')
+      if os.path.exists(matches):
+         with open(matches, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+               if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
+                  line = line.split('\n')[0]
+                  match_exceptions.append(line)
+      if os.path.exists(matches_in_path):
+         with open(matches_in_path, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+               if len(line) > 2: # blank-ish \n lines apparently have len=2 based on how I wrote this.
+                  line = line.split('\n')[0]
+                  match_exceptions.append(line)
       if moveFiles:
          self.delete_unneeded_files('no-NLP-match_'+specs,match_exceptions,files_path=path,moveNotDelete=True)
       else:
