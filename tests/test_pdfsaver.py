@@ -6,24 +6,6 @@ import os
 from os.path import join 
 import shutil
 
-"""
-keywords = ['legal aid','judicial assistance']
-example_law_files = []
-for ext in ('*.doc','*.docx','*.pdf'):
-    example_law_files.extend(glob.glob(join('./src/legiscrapor/data/pdfsaver_docs/',ext)))
-
-df = pd.DataFrame()
-i = 0 
-
-for law in example_law_files:
-    print('**********'+law+'*********')
-    text = ps.get_text(law)
-    df.loc[i,'Legislation'] = text
-    df.loc[i,'Example_number'] = i + 1
-    i += 1
-
-matches = nlpIE.full_nlp_ie(df,keywords,'English',1)
-"""
 
 #@pytest.fixture
 #def text_example():
@@ -59,3 +41,24 @@ def test_get_lowres_pdf():
     # make sure we get all the text. There are 1164 characters expected.
     assert len(text) == 1164
 
+def test_scan_no_pdfs():
+    ''' Test that scan_pdfs() correctly outputs empty DataFrame if there are no PDFs or docs there''' 
+    df = ps.scan_pdfs('./src/legiscrapor/data/legal_aid_examples/') 
+    assert len(df) == 0
+
+def test_scan_pdfs():
+    df = ps.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/') # expect 5 files -- 4 .pdf, 1 .doc
+
+    # TODO: test df has correct shape 
+
+    # TODO: test df['Legislation'] well-formed
+
+    # TODO: test df['Example_number'] well-formed
+
+    # TODO: test df['File_name'] well-formed
+
+    # remove temporary files created in processing low-resolution PDFS
+    os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
+    shutil.rmtree('./src/legiscrapor/data/pdfsaver_docs/temp_images')
+
+    assert 2 == 3
