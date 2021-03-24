@@ -49,16 +49,10 @@ def test_scan_no_pdfs():
 def test_scan_pdfs():
     df = ps.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/') # expect 5 files -- 4 .pdf, 1 .doc
 
-    # TODO: test df has correct shape 
-
-    # TODO: test df['Legislation'] well-formed
-
-    # TODO: test df['Example_number'] well-formed
-
-    # TODO: test df['File_name'] well-formed
- 
     # remove temporary files created in processing low-resolution PDFS
     os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
     shutil.rmtree('./src/legiscrapor/data/pdfsaver_docs/temp_images')
 
-    assert 2 == 3
+    assert len(df) == 5 # there are 5 files 
+    assert list(df.columns) == ['Legislation','Example_number','File_name']
+    assert list(df['Example_number']) == [1.0,2.0,3.0,4.0,5.0]
