@@ -60,13 +60,14 @@ def scan_pdfs(download_path):
 
     df = pd.DataFrame()
     i = 0 
-
-    for law in law_files:
-      print('**********'+law+'*********')
-      text = get_text(law)
-      df.loc[i,'Legislation'] = text
-      df.loc[i,'Example_number'] = i + 1
-      df.loc[i,'File_name'] = law
-      i += 1
+ 
+    if len(law_files) > 0:
+       for law in law_files:
+         print('**********'+law+'*********')
+         text = get_text(law)
+         df.loc[i,'Legislation'] = text
+         df.loc[i,'Example_number'] = i + 1
+         df.loc[i,'File_name'] = law
+         i += 1
 
     return(df)

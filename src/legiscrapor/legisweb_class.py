@@ -79,7 +79,8 @@ class legisWeb():
       "download.default_directory": self.downloadPath, #Change default directory for downloads
       "download.prompt_for_download": False, #To auto download the file
       "download.directory_upgrade": True,
-      "plugins.always_open_pdf_externally": True #It will not show PDF directly in chrome
+      "plugins.always_open_pdf_externally": True, #It will not show PDF directly in chrome
+      "safebrowsing.enabled": True # try safe-browsing to ensure this works on Windows 
       })
 
       self.driver = webdriver.Chrome(self.inputs[0],options=options)

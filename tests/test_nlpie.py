@@ -3,6 +3,7 @@ from legiscrapor.nlpIE import *
 import os 
 import re 
 import legiscrapor.pdf_saver as ps
+import shutil 
 
 @pytest.fixture
 def text_example():
@@ -71,7 +72,17 @@ def test_full_nlp():
     # unit tests for full_nlp_ie() 
     df = ps.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/')
     keywords = ["legal aid", "judicial assistance", "legal assistance", "legal service"]
-    stuff = full_nlp_ie(df,keywords,'English',1)
-    print(stuff)
-    assert 2 == 3
+    matches = full_nlp_ie(df,keywords,'English',1)
+    # remove temporary files created in processing low-resolution PDFS
+    os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
+    shutil.rmtree('./src/legiscrapor/data/pdfsaver_docs/temp_images')
 
+    assert len(matches) == 4
+
+def test_no_nlp():
+    # unit tests for full_nlp_ie(), to ensure full_nlp_ie() returns correct output for an empty text DataFrame 
+    df = ps.scan_pdfs('./src/legiscrapor/data/legal_aid_examples/')
+    keywords = ["legal aid", "judicial assistance", "legal assistance", "legal service"]
+    matches = full_nlp_ie(df,keywords,'English',1)
+
+    assert len(matches) == 0
