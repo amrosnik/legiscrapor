@@ -56,7 +56,7 @@ def test_scan_pdfs():
     # TODO: test df['Example_number'] well-formed
 
     # TODO: test df['File_name'] well-formed
-
+ 
     # remove temporary files created in processing low-resolution PDFS
     os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
     shutil.rmtree('./src/legiscrapor/data/pdfsaver_docs/temp_images')
