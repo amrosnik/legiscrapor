@@ -38,3 +38,36 @@ def test_read_inputs(eng_web):
     assert eng_web.keywords == ["legal aid", "judicial assistance", "legal assistance", "legal service"]
     assert eng_web.webpage == 1
 
+def test_scan_pdfs(eng_web):
+    eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
+    matches = eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords)
+    assert len(matches) ==  4
+
+def test_print_matches(eng_web): 
+    eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
+    matches = eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords)
+
+    # write matches to file: 
+    specs = 'TESTING'
+    eng_web.downloadPath = './src/legiscrapor/data/pdfsaver_docs/' # ensure the download path actually exists...
+    matches_file = os.path.join(eng_web.downloadPath,'matches_'+specs+'.txt') 
+    eng_web.print_matches(matches,specs)
+
+    assert os.path.isfile(matches_file)
+
+    # check that matches_file contains the expected content:
+    if os.path.exists(matches_file): 
+        with open(matches_file,'r') as f:
+            lines = f.readlines() 
+            assert lines == ['./src/legiscrapor/data/pdfsaver_docs/Act_20_of_1996_Legal_Aid_Amendment_Act.pdf\n', ' \n', './src/legiscrapor/data/pdfsaver_docs/Bangladesh_2000_Legal_Aid_Services_Act_eng.pdf\n', ' \n', './src/legiscrapor/data/pdfsaver_docs/Ghana_2018_Legal_Aid_Commission_Act_eng_1.pdf\n', ' \n', './src/legiscrapor/data/pdfsaver_docs/Sweden_1997_Legal_Aid_Regulation_eng.pdf\n', ' \n']
+
+def test_dropdown(eng_web):
+    words = eng_web.get_dropdown_words()
+
+    # since this is an English language legisWeb instance, we expect all the English results:
+    assert words == ['Law','law','Parliament','parliament','Congress','congress','Legislation','legislation','Legislature','legislature','Document','document','Legal','legal']
+
+#def test_delete_unneeded_files(eng_web):
+
+
+
