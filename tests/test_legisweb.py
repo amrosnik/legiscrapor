@@ -1,6 +1,7 @@
 import pytest 
 from legiscrapor.legisweb_class import legisWeb 
 import os 
+import shutil
 
 @pytest.fixture
 def eng_web():
@@ -67,7 +68,56 @@ def test_dropdown(eng_web):
     # since this is an English language legisWeb instance, we expect all the English results:
     assert words == ['Law','law','Parliament','parliament','Congress','congress','Legislation','legislation','Legislature','legislature','Document','document','Legal','legal']
 
-#def test_delete_unneeded_files(eng_web):
+def test_delete_unneeded_files(eng_web):
+    eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
+    matches = list(eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords))
+
+    specs = 'TESTING'
+    eng_web.downloadPath = './src/legiscrapor/data/pdfsaver_docs/' # ensure the download path actually exists...
+
+    eng_web.delete_unneeded_files(specs,matches,path=eng_web.downloadPath,moveNotDelete=True)
+
+    assert os.path.isdir(eng_web.downloadPath+"no-NLP-match")
+    assert len(os.listdir(eng_web.downloadPath+"no-NLP-match")) == 1 
+
+    # check that moved-files_file contains the expected content:
+    moved_file = os.path.join(eng_web.downloadPath,'moved-files_'+specs+'.txt') 
+    if os.path.exists(moved_file): 
+        with open(moved_file,'r') as f:
+            lines = f.readlines() 
+            assert lines == ['./src/legiscrapor/data/pdfsaver_docs/Pakistan_1999_Bar_Council_Free_Legal_Aid_Rules.doc\n', ' \n']
+
+    # move .doc file back to pdfsaver_docs/, delete no-NLP-match dir, delete intermediate .txt's
+    shutil.move(eng_web.downloadPath+'no-NLP-match/Pakistan_1999_Bar_Council_Free_Legal_Aid_Rules.doc',eng_web.downloadPath)
+    shutil.rmtree(eng_web.downloadPath+"no-NLP-match")
+    os.remove(moved_file)
+    matches_file = os.path.join(eng_web.downloadPath,'matches_'+specs+'.txt') 
+    os.remove(matches_file)
 
 
+def test_delete_matches(eng_web):
+    eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
+    matches = eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords)
 
+    specs = 'TESTING'
+    eng_web.downloadPath = './src/legiscrapor/data/pdfsaver_docs/' # ensure the download path actually exists...
+    # this is basically a slightly different way to do the test_delete_unneeded_files() test...
+    eng_web.print_matches(matches,specs)
+    eng_web.delete_no_matches(specs,path=eng_web.downloadPath,moveFiles=True)
+
+    assert os.path.isdir(eng_web.downloadPath+"no-NLP-match")
+    assert len(os.listdir(eng_web.downloadPath+"no-NLP-match")) == 1 
+
+    # check that moved-files_file contains the expected content:
+    moved_file = os.path.join(eng_web.downloadPath,'moved-files_no-NLP-match_'+specs+'.txt') 
+    if os.path.exists(moved_file): 
+        with open(moved_file,'r') as f:
+            lines = f.readlines() 
+            assert lines == ['./src/legiscrapor/data/pdfsaver_docs/Pakistan_1999_Bar_Council_Free_Legal_Aid_Rules.doc\n', ' \n']
+
+    # move .doc file back to pdfsaver_docs/, delete no-NLP-match dir, delete intermediate .txt's
+    shutil.move(eng_web.downloadPath+'no-NLP-match/Pakistan_1999_Bar_Council_Free_Legal_Aid_Rules.doc',eng_web.downloadPath)
+    shutil.rmtree(eng_web.downloadPath+"no-NLP-match")
+    os.remove(moved_file)
+    matches_file = os.path.join(eng_web.downloadPath,'matches_'+specs+'.txt') 
+    os.remove(matches_file)
