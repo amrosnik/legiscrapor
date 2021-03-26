@@ -3,6 +3,12 @@ from legiscrapor.legisweb_class import legisWeb
 import os 
 import shutil
 
+#### UNIT TESTS FOR LEGISWEB CLASS ####
+
+## VERY IMPORTANT: please modify the customize_me.txt file 
+## in the data/ folder before running these tests! 
+## follow instructions in the file to ensure your chromedriver can be located correctly. 
+
 @pytest.fixture
 def eng_web():
     '''Returns a LegisWeb instance with English as the language'''
@@ -33,7 +39,7 @@ def test_read_inputs(eng_web):
     eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
     assert eng_web.inputs[0] == "/home/yourname/chromedriver"
     assert eng_web.country == "Kenya" 
-    assert eng_web.downloadPath == "/home/yourname/Downloads/legiscrapor_test/"
+    assert eng_web.downloadPath == "./src/legiscrapor/data/pdfsaver_docs/"
     assert eng_web.website == "http://kenyalaw.org/kl/"
     assert eng_web.language == "English"
     assert eng_web.keywords == ["legal aid", "judicial assistance", "legal assistance", "legal service"]
@@ -50,7 +56,6 @@ def test_print_matches(eng_web):
 
     # write matches to file: 
     specs = 'TESTING'
-    eng_web.downloadPath = './src/legiscrapor/data/pdfsaver_docs/' # ensure the download path actually exists...
     matches_file = os.path.join(eng_web.downloadPath,'matches_'+specs+'.txt') 
     eng_web.print_matches(matches,specs)
 
@@ -73,7 +78,6 @@ def test_delete_unneeded_files(eng_web):
     matches = list(eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords))
 
     specs = 'TESTING'
-    eng_web.downloadPath = './src/legiscrapor/data/pdfsaver_docs/' # ensure the download path actually exists...
 
     eng_web.delete_unneeded_files(specs,matches,path=eng_web.downloadPath,moveNotDelete=True)
 
@@ -100,7 +104,6 @@ def test_delete_matches(eng_web):
     matches = eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords)
 
     specs = 'TESTING'
-    eng_web.downloadPath = './src/legiscrapor/data/pdfsaver_docs/' # ensure the download path actually exists...
     # this is basically a slightly different way to do the test_delete_unneeded_files() test...
     eng_web.print_matches(matches,specs)
     eng_web.delete_no_matches(specs,path=eng_web.downloadPath,moveFiles=True)
@@ -121,3 +124,12 @@ def test_delete_matches(eng_web):
     os.remove(moved_file)
     matches_file = os.path.join(eng_web.downloadPath,'matches_'+specs+'.txt') 
     os.remove(matches_file)
+
+def test_init_driver(eng_web):
+    eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    # basically, just need to see if this command works. 
+    # if this test fails, then it fails to locate chromedriver 
+    # and initialize a Selenium webdriver.
+
+#def test_search_laws(eng_web):
+
