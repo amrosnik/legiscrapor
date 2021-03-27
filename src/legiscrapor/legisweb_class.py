@@ -85,6 +85,10 @@ class legisWeb():
 
       self.driver = webdriver.Chrome(self.inputs[0],options=options)
 
+  def get_driver(self):
+      # returns the chromedriver in case it needs to get passed along externally...
+      return(self.driver)
+
   def change_mincount(self,new_mincount):
       ## if one is trying to run the generic legisWeb code on a new mincount, 
       ## maybe they'll want to change the mincount attribute at some point...
