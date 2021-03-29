@@ -2,6 +2,9 @@ import pytest
 from legiscrapor.legisweb_class import legisWeb 
 import os 
 import shutil
+import numpy as np 
+import re 
+import pandas as pd 
 
 #### UNIT TESTS FOR LEGISWEB CLASS ####
 
@@ -130,6 +133,74 @@ def test_init_driver(eng_web):
     # basically, just need to see if this command works. 
     # if this test fails, then it fails to locate chromedriver 
     # and initialize a Selenium webdriver.
+    eng_web.teardown()
 
-#def test_search_laws(eng_web):
+def test_search_laws(eng_web,capfd):
+    eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+
+    k = 'judicial assistance'
+
+    hrefs = eng_web.search_laws(k)
+    out,err = capfd.readouterr()
+    patterns = ['Law','Parliament','Legal']
+    for p in patterns: 
+        assert re.search(p,out)
+    assert len(hrefs) == 0
+    eng_web.teardown()
+   
+def test_search_for_words(eng_web):
+    ''' test for keywords that actually appear on the whole_page webpage '''
+    eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    keywords = ["department", "ministry"]
+    link = 'https://legislative.gov.in/about-us/about-departments'
+    counts = eng_web.search_for_words(link,keywords)
+    eng_web.teardown()
+    assert counts['department'] == 3
+    assert counts['ministry'] == 2
+    assert counts['TOTAL'] == 5
+
+def test_search_for_no_words(eng_web):
+    ''' test for keywords that do NOT appear on the whole_page webpage '''
+    eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    keywords = ["blue","cake"]  
+    link = 'https://legislative.gov.in/about-us/about-departments'
+    counts = eng_web.search_for_words(link,keywords)
+    eng_web.teardown()
+    assert counts['blue'] == 0
+    assert counts['cake'] == 0
+    assert counts['TOTAL'] == 0
+
+def test_keywords_from_links(eng_web):
+    ''' test for keywords that appear on the webpage '''
+    eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    eng_web.driver.get('https://legislative.gov.in/about-us/about-departments')
+    pattern = re.compile(r'Vision') # there should only be one link that matches this pattern in its link text / hyperlink name
+    keywords = ['about'] 
+    matches = eng_web.find_links_by_pattern('//a',pattern,keywords)
+    eng_web.teardown()
+    assert len(matches) == 1 
+    assert matches.loc[0,"href"] == 'https://legislative.gov.in/about-us/vision-mission-and-objectives'
+    assert matches.loc[0,"keyword_matches"] == {'about': 10, 'TOTAL': 10} # the word 'about' appears 10 times in the source code of the Vision page
+
+def test_no_pattern_keywords_from_links(eng_web):
+    # unit test to ensure appropriate behavior for no pattern match 
+    eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    eng_web.driver.get('https://legislative.gov.in/about-us/about-departments')
+    pattern = re.compile(r'blue') # there should only be one link that matches this pattern in its link text / hyperlink name
+    keywords = ['about'] 
+    matches = eng_web.find_links_by_pattern('//a',pattern,keywords)
+    eng_web.teardown()
+    assert len(matches) == 0
+
+def test_no_keywords_from_links(eng_web):
+    # unit test to ensure appropriate behavior for pattern match but no keyword match 
+    eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    eng_web.driver.get('https://legislative.gov.in/about-us/about-departments')
+    pattern = re.compile(r'Vision') # there should only be one link that matches this pattern in its link text / hyperlink name
+    keywords = ['blue'] 
+    matches = eng_web.find_links_by_pattern('//a',pattern,keywords)
+    eng_web.teardown()
+    assert len(matches) == 1 
+    assert matches.loc[0,"href"] == 'https://legislative.gov.in/about-us/vision-mission-and-objectives'
+    assert matches.loc[0,"keyword_matches"] == {'blue': 0, 'TOTAL': 0} # the word 'blue' appears 0 times in the source code of the Vision page
 
