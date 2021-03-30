@@ -1,6 +1,7 @@
 import pytest 
 from legiscrapor.legissouthafrica import legisSouthAfrica
 import os 
+import shutil
 
 @pytest.fixture
 def za_web():
@@ -28,8 +29,35 @@ def test_search_mandates(za_web):
     expected.sort()
     assert len(links) == 3
     assert links == expected
+    za_web.teardown()
 
-#def test_get_pdfs(za_web):
+def test_get_pdfs(za_web):
+    za_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    za_web.country = "South Africa"
+    links = za_web.search_mandates('service',za_web.downloadPath)
+    za_web.get_pdfs(links,path=za_web.downloadPath+"mandates/")
+    assert len(os.listdir(za_web.downloadPath+'mandates/')) == 3
+    shutil.rmtree(za_web.downloadPath+"mandates/")
+    shutil.rmtree(za_web.downloadPath)
+    za_web.teardown()
+
+def test_run_constit(za_web):
+    za_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    za_web.country = "South Africa"
+    keywords = ['service','legal']
+    matches = za_web.run_constitution(keywords)
+    expected = ['constit/Act_200_of_1993_Constitution_of_the_Republic_of_South_Africa_Act_Interim_Constitution.pdf','constit/Act_34_of_2001_Constitution_of_the_Republic_of_South_Africa_Amendment_Act.pdf','constit/Act_3_of_2003_Constitution_of_the_Republic_of_South_Africa_Second_Amendment_Act.pdf','constit/SAConstitution.pdf']
+    matches = [ m.replace(za_web.downloadPath,"") for m in matches ] 
+    matches.sort()
+    expected.sort()
+    print(matches)
+    print(expected)
+    assert len(matches) == 4
+    assert matches == expected
+    shutil.rmtree(za_web.downloadPath+"constit/")
+    shutil.rmtree(za_web.downloadPath)
+    za_web.teardown()
+  
 
    
 
