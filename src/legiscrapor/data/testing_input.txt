@@ -7,7 +7,8 @@
 /home/yourname/chromedriver
 
 ## download folder path. This folder, which may or may not exist yet, is where all the downloaded PDFs will go for this country. 
-## you MUST include a slash ( "/" ) at the end. 
+## you MUST include a slash ( "/" ) at the end.
+## Note that, as written, this particular path assumes unit tests are being run from the package main directory. 
 ./src/legiscrapor/data/pdfsaver_docs/
 
 ## website address
