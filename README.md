@@ -109,8 +109,8 @@ you run the unit tests.
 **Then re-install the package via `pip install .` from the package main directory to update the package.** 
 The tests need to know where chromedriver is located, as well as the download path for testing the PDF download functions. There are more detailed instructions in the comments of `customize_me.txt`. 
 
-This can be done in one of two ways, from the command line 
-while in the package main directory: 
+Unit tests can be run in one of two ways (both from the command line 
+while in the package main directory): 
 
 ```python
 python setup.py test
