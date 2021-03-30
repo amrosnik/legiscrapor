@@ -214,7 +214,6 @@ def test_get_pdfs(eng_web):
     assert len(os.listdir(eng_web.downloadPath+'kenya_pdfs/')) == 19
     shutil.rmtree(eng_web.downloadPath+"kenya_pdfs")
     shutil.rmtree(eng_web.downloadPath)
-    #os.remove(moved_file)
     eng_web.teardown()
     
 
