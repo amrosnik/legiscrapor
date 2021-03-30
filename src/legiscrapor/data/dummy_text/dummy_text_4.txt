@@ -1,7 +1,0 @@
-Use a Password Manager
-
-We're always harping on you to get a password manager because it's more secure and will make you safer online. But I'll let you in on a little secret: I don't use one for security so much as for convenience. The security is there, but the main thing I love about a password manager is how simple it is get up and running on a new device, quickly putting all my passwords at my fingertips.
-
-Probably the most time-consuming process of setting up a new testing device is logging into all the services I need. There's work email, Slack, Airtable, publishing systems, Amazon, and dozens of other web-based services that I need to get up and running before I can get any work done. And I don't like to keep my coworkers waiting too long for my snarky comments on Slack, so the faster I get this set up the better.
-
-I use Pass, which is nerdy, self-hosted, and a little complicated, but I've been using it for so long that it's the most comfortable for me. If that looks like too much, I have accomplished the same thing using all the services in our guide to password managers. For most people, 1Password is my recommendation.

@@ -55,7 +55,7 @@ class legisSouthAfrica(legisWeb):
     self.driver.get(base+"/mandates?queries[search]="+keyword+"&sorts[date]=-1&perPage=50") # we use this link to avoid interacting with the dynamic table
     ## perPage = 50 indicates 50 table results/page view 
     self.driver.set_window_size(1324, 752)
-    self.driver.implicitly_wait(5)
+    self.driver.implicitly_wait(50)
 
     trs = self.driver.find_elements_by_xpath('//tbody/tr[@style="cursor:pointer"]')
     extracted_links = [link.get_attribute("onclick").strip("window.open(").strip("','_blank')") for link in trs]

@@ -1,8 +1,0 @@
-### dummy plain text code from a random article I bookmarked: https://www.wired.com/story/how-to-sync-your-data-everywhere/ 
-
-How to Sync and Access Your Data Across Devices
-Here's how to open all your files—so you can switch between your phone and laptop seamlessly.
-
-Moving your data from one device to another is a pain. It's enough of a pain that most software services these days offer some kind of data transfer tool when you set up your new device. Unfortunately, most of the time these "migration assistants" are garbage.
-
-I'm in a unique position of having to use new devices all the time, which is both tons of fun and a pain in the butt when it comes to setting them up. After years of doing this, trying new services, and tweaking my systems, I've finally settled on a way to have all my data and eat it wherever I go, whichever device I use. Here's how.

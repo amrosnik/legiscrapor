@@ -100,3 +100,30 @@ sudo apt install ./google-chrome-stable_current_amd64.deb
 
 For Windows: look at [this guide](http://jonathansoma.com/lede/foundations-2018/classes/selenium/selenium-windows-install/). 
 
+## Testing 
+
+If you would like to make sure legiscrapor is working properly, it is strongly advised
+you run the unit tests.
+ 
+**VERY important: please update `src/legiscrapor/data/customize_me.txt` before running unit tests.** 
+**Then re-install the package via `pip install .` from the package main directory to update the package.** 
+The tests need to know where chromedriver is located, as well as the download path for testing the PDF download functions. There are more detailed instructions in the comments of `customize_me.txt`. 
+
+Unit tests can be run in one of two ways (both from the command line 
+while in the package main directory): 
+
+```python
+python setup.py test
+``` 
+
+or
+
+```python
+pytest 
+```
+
+The tests take about 20 minutes to run; it's slow because some websites take a long time 
+to load. Please plan your time accordingly! 
+
+If you are making patches to legiscrapor, please write tests! Tests are crucial to 
+creating reproducible code and for instructing future developers. 
