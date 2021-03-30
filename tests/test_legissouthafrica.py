@@ -14,6 +14,17 @@ def test_language(za_web):
 def test_country(za_web):
     assert za_web.country == "South Africa"
 
+def test_no_run(za_web):
+    ''' Check if we, correctly, get a ValueError from a currently page type'''
+    za_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    za_web.country = "South Africa"
+    keywords = ['service','legal']
+    with pytest.raises(ValueError):
+        za_web.run(keywords,'blue')
+    # NOTE: amrosnik chose not to write more unit tests for the run() function
+    # because the tests would take too long to run. 
+    # Future maintainers: consider writing proper integration tests utilizing run()
+   
 def test_search_legislation(za_web):
     za_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
     za_web.country = "South Africa" 
@@ -50,14 +61,23 @@ def test_run_constit(za_web):
     matches = [ m.replace(za_web.downloadPath,"") for m in matches ] 
     matches.sort()
     expected.sort()
-    print(matches)
-    print(expected)
     assert len(matches) == 4
     assert matches == expected
     shutil.rmtree(za_web.downloadPath+"constit/")
     shutil.rmtree(za_web.downloadPath)
     za_web.teardown()
   
-
-   
-
+def test_run_mandates(za_web):
+    za_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    za_web.country = "South Africa"
+    keywords = ['service','legal']
+    matches = za_web.run_mandates(keywords)
+    za_web.teardown()
+    expected = ['mandates/329848_1.pdf','mandates/568169_1.pdf','mandates/568170_1.pdf','mandates/568171_1.pdf','mandates/568173_1.pdf','mandates/568473_1.pdf']
+    matches = [ m.replace(za_web.downloadPath,"") for m in matches ] 
+    matches.sort()
+    expected.sort()
+    assert len(matches) == 6
+    assert matches == expected
+    shutil.rmtree(za_web.downloadPath+"mandates/")
+    shutil.rmtree(za_web.downloadPath)
