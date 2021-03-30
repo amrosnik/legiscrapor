@@ -162,7 +162,7 @@ class legisWeb():
       if source_dir != target_dir:
          if not os.path.exists(target_dir):
             os.makedirs(target_dir)
-     
+    
       if len(links) > 0:
           for link in links: 
                  self.driver.get(link) # when this link is clicked, the PDF will be downloaded automatically

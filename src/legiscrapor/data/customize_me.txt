@@ -12,7 +12,8 @@
 
 ## download folder path. This folder, which may or may not exist yet, is where all the downloaded PDFs will go for this country. 
 ## you MUST include a slash ( "/" ) at the end. 
-./src/legiscrapor/data/pdfsaver_docs/
+#/home/PLEASE/CHANGE/THIS/TO/YOUR/DOWNLOADS/PATH/
+/home/andreana/Downloads/testing/
 
 ## website address
 ## the initial website for the legislative body of the country. 
