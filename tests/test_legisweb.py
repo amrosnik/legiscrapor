@@ -211,9 +211,9 @@ def test_get_pdfs(eng_web):
     links = ['http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=CAP.%20198','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=CAP.%20326','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2011%20of%202016','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2013%20of%202019','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2014%20of%202019','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2016%20of%202013','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2019%20of%202011','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%202%20of%202000','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%202%20of%202009','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2021%20of%202017','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2024%20of%202011','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2026%20of%202015','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2028%20of%202011','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%204%20of%202006','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%204%20of%202016','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2043%20of%202016','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%2047%20of%202013','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%206%20of%202012','http://kenyalaw.org:8181/exist/kenyalex/actview.xql?actid=No.%208%20of%201999']
     eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
     eng_web.get_pdfs(links,path=eng_web.downloadPath+'kenya_pdfs/',anotherLink=True) 
+    eng_web.teardown()
     assert len(os.listdir(eng_web.downloadPath+'kenya_pdfs/')) == 19
     shutil.rmtree(eng_web.downloadPath+"kenya_pdfs")
     shutil.rmtree(eng_web.downloadPath)
-    eng_web.teardown()
     
 
