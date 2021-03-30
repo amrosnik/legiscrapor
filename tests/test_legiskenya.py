@@ -2,6 +2,14 @@ import pytest
 from legiscrapor.legiskenya import legisKenya
 import os 
 
+#### UNIT TESTS FOR LEGISKENYA CLASS ####
+## The following are unit tests 
+## for the LegisKenya methods. 
+## As noted in other unit test files, 
+## please customize the customize_me.txt file
+## prior to running these tests 
+## to ensure they actually work.
+
 @pytest.fixture
 def kl_web():
     '''Returns a LegisKenya instance'''

@@ -5,6 +5,10 @@ import re
 import legiscrapor.pdf_saver as ps
 import shutil 
 
+#### UNIT TESTS FOR NLPIE MODULE #### 
+## Each unit test name roughly corresponds to 
+## the function it is testing. 
+
 @pytest.fixture
 def text_example():
     ''' Returns the text for a legal aid document exerpt.''' 

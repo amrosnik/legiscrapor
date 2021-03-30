@@ -6,13 +6,9 @@ import os
 from os.path import join 
 import shutil
 
-
-#@pytest.fixture
-#def text_example():
-#    ''' Returns the text for a legal aid document exerpt.''' 
-#    with open('./src/legiscrapor/data/legal_aid_examples/legal_aid_example_1.txt', 'r') as f:
-#        text = f.read()
-#    return text
+#### UNIT TESTS FOR PDF_SAVER MODULE #### 
+## Each unit test name roughly corresponds to 
+## the function it is testing. 
 
 def test_get_pdf():
     ''' Test that pdf_saver.get_text() works correctly for a nice, high-resolution PDF'''

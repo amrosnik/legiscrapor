@@ -3,6 +3,16 @@ from legiscrapor.legissouthafrica import legisSouthAfrica
 import os 
 import shutil
 
+#### UNIT TESTS FOR LEGISSOUTHAFRICA CLASS ####
+## The following are unit tests 
+## for the LegisSouthAfrica methods.
+## The test name roughly corresponds with 
+## the method it tests.
+## As noted in other unit test files, 
+## please customize the customize_me.txt file
+## prior to running these tests 
+## to ensure they actually work.
+
 @pytest.fixture
 def za_web():
     '''Returns a LegisSouthAfrica instance'''
