@@ -1,7 +1,0 @@
-Use a Browser Sync Service
-
-I sync my documents with NextCloud running on my own server, but for web browser data I use what comes in the box.
-
-Browser-wise, I primarily use Vivaldi and Mozilla Firefox. Both offer a way to sync your data between devices, as do other browsers, like Google Chrome and Brave. I use Vivaldi Sync and Firefox Sync to make sure I have my bookmarks, browsing history, open tabs, preferences, add-ons, and auto-fill data saved. Everything but passwords, which I sync with a password manager (more on that below).
-
-As with the document syncing, syncing web browsing data means I can seamlessly move from device to device, picking up my browsing sessions right where I left off. My history and even open tabs from any device are available on every device.

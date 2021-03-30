@@ -1,5 +1,0 @@
-Email Is Easy
-
-If you use web-based email like Gmail or Outlook.com, there's not much to do. You can access your email in a web browser. In fact, no matter which email provider you use, these days there's almost guaranteed to be web-based access of some kind. Check your email provider's documentation for details.
-
-I prefer to check my email through either Mutt or Thunderbird, which requires one extra step: downloading the application and filling in my mail provider's details. In a pinch, NextCloud has an email application I sometimes use to check my mail in a web browser. (This is what I do on Chromebooks, where running an application like Thunderbird is not possible.)

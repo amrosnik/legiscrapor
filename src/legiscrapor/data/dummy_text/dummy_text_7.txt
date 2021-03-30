@@ -1,5 +1,0 @@
-This Is Easier If You Don't Test Hardware
-
-This is how I work, but my work is an extreme case. Most people do not get a new laptop almost every week. Still, even if I did not have to test a bunch of hardware, I would use this system to make sure all my data, web browsing, and passwords move seamlessly between my phone and my laptop.
-
-The best part? This entire system is affordable. I pay $10 a month for the server that hosts my NextCloud files. Even if you spring for Dropbox's Plus plan, $10 a month isn't much to pay for the convenience of having all your files available no matter which device you find in your hand.

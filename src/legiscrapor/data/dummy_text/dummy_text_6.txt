@@ -1,9 +1,0 @@
-Work in Cross-Platform Applications
-
-I am not a huge fan of web-based tools and applications. Between potential security issues, vendor lock-in, and years of living with flaky internet connections, I'm most comfortable working locally and then syncing. I end up using mainly desktop applications and letting NextCloud handle the rest. This way I can keep working even when the coffee shop Wi-Fi craps out. And I never have to worry that an update to my favorite cloud application will destroy my entire workflow.
-
-For all of this to work, though, it helps to use applications that are cross-platform. For Windows, macOS, and even Linux, this is mostly not a problem. For spreadsheets and all things office-suite related, I use LibreOffice, which works across all three. Vivaldi and Firefox for web browsing work on all of these operating systems, as do communications apps like Zoom and Slack.
-
-Problems crop up if you start to consider Google's Chrome OS, which barely has the concept of a desktop, let alone locally running applications. This is why we suggest you very carefully evaluate your needs before buying a Chromebook. On Chrome OS, you're more or less forced to use web-based applications. If you want tight integration with the operating system itself, you're further limited to Google's web-based applications.
-
-When I have to test Chrome OS devices, I punt and use Google's applications since this is most likely what readers will be doing and I'm trying to evaluate how well a device meets those needs. To get my data off Chrome OS so I can work on it elsewhere, I manually copy and paste from a Google Doc into a plain text document in NextCloud (which does at least sync files to Chrome OS devices via the Android app). This is awkward and I don't recommend it as a workflow, but it gets me by.

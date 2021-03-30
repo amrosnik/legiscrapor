@@ -14,6 +14,16 @@ def test_language(za_web):
 def test_country(za_web):
     assert za_web.country == "South Africa"
 
+def test_search_acts(za_web):
+    za_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
+    za_web.country = "South Africa"
+    links = za_web.search_acts('legal',1995)
+    expected = ['https://www.parliament.gov.za/storage/app/media/Acts/1995/Act_43_of_1995_Legal_Succession_to_the_South_African_Transport_Services_Amendment_Act.pdf', 'https://www.parliament.gov.za/storage/app/media/Acts/1995/Act_43_of_1995_Legal_Succession_to_the_South_African_Transport_Services_Amendment_Act.pdf', 'https://www.parliament.gov.za/storage/app/media/Acts/1995/Act_33_of_1995_Admission_of_Legal_Practitioners_Amendment_Act.pdf', 'https://www.parliament.gov.za/storage/app/media/Acts/1995/Act_33_of_1995_Admission_of_Legal_Practitioners_Amendment_Act.pdf', 'https://www.parliament.gov.za/storage/app/media/Acts/1995/Act_10_of_1995_Recognition_of_Foreign_Legal_Qualifications_and_Practice_Amendment_Act.pdf', 'https://www.parliament.gov.za/storage/app/media/Acts/1995/Act_10_of_1995_Recognition_of_Foreign_Legal_Qualifications_and_Practice_Amendment_Act.pdf']
+    links.sort()
+    expected.sort()
+    assert len(links) == 6
+    assert links == expected
+
 def test_no_run(za_web):
     ''' Check if we, correctly, get a ValueError from a currently page type'''
     za_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
@@ -81,3 +91,5 @@ def test_run_mandates(za_web):
     assert matches == expected
     shutil.rmtree(za_web.downloadPath+"mandates/")
     shutil.rmtree(za_web.downloadPath)
+
+
