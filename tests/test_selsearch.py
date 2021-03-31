@@ -26,7 +26,7 @@ def lw():
 def whole_page():
     ''' Returns the HTML source code for a webpage on the India Legislative website, 
     https://legislative.gov.in/about-us/about-departments '''
-    with open('./src/legiscrapor/data/legislative-dot-gov-dot-in__about-us__about-departments.html', 'r') as f:
+    with open('./src/legiscrapor/data/selsearch_nlp_docs/legislative-dot-gov-dot-in__about-us__about-departments.html', 'r') as f:
         webpage = f.read()
     return webpage
 
@@ -84,4 +84,16 @@ def test_no_keywords_from_links(lw):
     assert len(matches) == 1 
     assert matches.loc[0,"href"] == 'https://legislative.gov.in/about-us/vision-mission-and-objectives'
     assert matches.loc[0,"keyword_matches"] == {'blue': 0, 'TOTAL': 0} # the word 'blue' appears 0 times in the source code of the Vision page
+
+def test_spanish():
+    ''' Trying the search_for_keywords() paradigm with Spanish language, 
+    mostly to check that special characters are detected as unique '''
+    with open('./src/legiscrapor/data/selsearch_nlp_docs/es-wikipedia-org_wiki_Gobierno_de_Espana.html', 'r') as f:
+        webpage = f.read()
+    keywords = ['gobierno','Espana','España'] 
+    counts = selsearch.search_for_keywords(webpage, keywords)
+    assert counts['gobierno'] == 16
+    assert counts['Espana'] == 0 # this should not be found because it's the incorrect spelling! 
+    assert counts['España'] == 121
+    assert counts['TOTAL'] == 137
 

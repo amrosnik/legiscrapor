@@ -90,3 +90,12 @@ def test_no_nlp():
     matches = full_nlp_ie(df,keywords,'English',1)
 
     assert len(matches) == 0
+
+def test_spanish():
+    ''' Trying the search_for_keywords() paradigm with Spanish language, 
+    mostly to check that special characters are detected as unique '''
+    keywords = ['gobierno','Espana','España'] 
+    df = ps.scan_pdfs('./src/legiscrapor/data/selsearch_nlp_docs/')
+    matches = full_nlp_ie(df,keywords,'Spanish',1)
+    assert len(matches) == 1 # the only match should be the Gobierno de España wikipedia PDF.
+
