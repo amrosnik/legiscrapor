@@ -27,8 +27,16 @@ def load_lang_model(lang):
             os.system('python3 -m spacy download en_core_web_sm')
             os.system('python -m spacy download en_core_web_sm') # in case the above command doesn't work...
             nlp = spacy.load('en_core_web_sm', disable=['ner', 'textcat'])
+    elif lang == "Spanish":
+        try:
+            nlp = spacy.load('es_core_news_sm', disable=['ner', 'textcat'])
+        except OSError:
+            print("Missing spacy module, attempting download.")
+            os.system('python3 -m spacy download es_core_news_sm')
+            os.system('python -m spacy download es_core_news_sm') # in case the above command doesn't work...
+            nlp = spacy.load('es_core_news_sm', disable=['ner', 'textcat'])
     else: 
-        raise ValueError("ERROR: CODE CURRENTLY DOES NOT SUPPORT LANGUAGES OTHER THAN ENGLISH") 
+        raise ValueError("ERROR: CODE CURRENTLY DOES NOT SUPPORT LANGUAGES OTHER THAN ENGLISH AND SPANISH") 
 
 ### first, let's import some manually created text file, for the most initial proof of concept.
 ## then, clean it up + put into tabular form 
