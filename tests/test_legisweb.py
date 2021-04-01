@@ -51,12 +51,16 @@ def test_read_inputs(eng_web):
 def test_scan_pdfs(eng_web):
     eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
     matches = eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords)
+    if os.path.exists('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt'):
+        os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
     assert len(matches) ==  4
 
 def test_print_matches(eng_web): 
     eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
     matches = eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords)
 
+    if os.path.exists('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt'):
+        os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
     # write matches to file: 
     specs = 'TESTING'
     matches_file = os.path.join(eng_web.downloadPath,'matches_'+specs+'.txt') 
@@ -79,6 +83,8 @@ def test_dropdown(eng_web):
 def test_delete_unneeded_files(eng_web):
     eng_web.read_inputs("./src/legiscrapor/data/testing_input.txt",notTesting=False)
     matches = list(eng_web.scan_pdfs('./src/legiscrapor/data/pdfsaver_docs/',eng_web.keywords))
+    if os.path.exists('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt'):
+        os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
 
     specs = 'TESTING'
 
@@ -127,6 +133,8 @@ def test_delete_matches(eng_web):
     os.remove(moved_file)
     matches_file = os.path.join(eng_web.downloadPath,'matches_'+specs+'.txt') 
     os.remove(matches_file)
+    if os.path.exists('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt'):
+        os.remove('./src/legiscrapor/data/pdfsaver_docs/low_resolution_pdfs.txt')
 
 def test_init_driver(eng_web):
     eng_web.read_inputs("./src/legiscrapor/data/customize_me.txt",notTesting=True)
