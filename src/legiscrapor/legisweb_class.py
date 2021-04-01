@@ -288,7 +288,7 @@ class legisWeb():
       mfile.close()
 
   def get_dropdown_words(self):
-      dropdown_words = {'English': ['Law','law','Parliament','parliament','Congress','congress','Legislation','legislation','Legislature','legislature','Document','document','Legal','legal']}
+      dropdown_words = {'English': ['Law','law','Parliament','parliament','Congress','congress','Legislation','legislation','Legislature','legislature','Document','document','Legal','legal'], 'Spanish': ['Lei','lei','Documento','documento','Congreso','congreso','Asamblea','asamblea','Legislación','legislación','Parlamento','parlamento','Legal','legal','Legislatura','legislatura']}
       words = []
       try: 
           words = dropdown_words.get(self.language)
